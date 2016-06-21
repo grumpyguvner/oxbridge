@@ -150,3 +150,14 @@ a.button-prod {
     margin-bottom: 1em;
     padding-bottom: 0;
 }
+
+/* Added June 2016 by Mark Horton to Reduce space in Related Products Section on Product Page */
+.product-thumb {
+    padding-top: 18px;
+}
+.product-thumb .image {
+    padding-bottom: 18px;
+}
+.product-thumb .caption .name {
+    min-height: 3em;
+}
