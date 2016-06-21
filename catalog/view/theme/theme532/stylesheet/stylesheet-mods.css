@@ -144,3 +144,9 @@ a.button-prod {
   color: #777777;
   font-weight: normal;
 }
+
+/* Added June 2016 by Mark Horton to Reduce space in Reviews Section on Product Page */
+.product-reviews .review-item {
+    margin-bottom: 1em;
+    padding-bottom: 0;
+}
