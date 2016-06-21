@@ -137,3 +137,10 @@
 a.button-prod {
     color: #fff !important;
 }
+
+/* Added June 2016 by Mark Horton for Text Added to Product Page */
+.price-section .price-text {
+  font-size: 12px;
+  color: #777777;
+  font-weight: normal;
+}
