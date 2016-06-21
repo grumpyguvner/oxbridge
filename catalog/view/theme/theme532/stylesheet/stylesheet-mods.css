@@ -1,0 +1,139 @@
+.camera_container {
+    position:relative;
+    width:100%;
+    padding-bottom: 46.49%
+}
+
+.content_bottom {
+    max-width: 1200px;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 996px) {
+
+    .content_bottom {
+        width: 967px;
+    }
+
+}
+
+.affix-bottom {
+    position: relative
+}
+
+@media (max-width: 768px) {
+    .affix {
+        position: relative;
+    }
+    .affix-bottom {
+        padding-top: 50px;
+    }
+    .header {
+        padding-top: 51px;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .affix {
+        position: fixed;
+        width: 283px;
+        top: 60px;
+    }
+}
+
+@media (min-width: 991px) {
+
+    .affix {
+        position: fixed;
+        width: 373px;
+        top: 60px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .affix {
+        position: fixed;
+        width: 371px;
+        top: 60px;
+    }
+}
+
+/* Related Image Slider */
+.related-slider .owl-stage {
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .lazy img {
+        height: auto;
+        left: auto;
+        position: relative;
+        top: 0px;
+        padding-right: 10px;
+        width: auto;
+        z-index: 0;
+    }
+}
+
+#product .rating-section.product-rating-status {
+    padding-bottom: 20px;
+}
+
+#content a:link,
+#content a:visited
+{
+    color: #ff4f02;
+}
+#content a:hover
+{
+    color: #717171;
+}
+
+#content .btn, #content .btn:visited,
+#compare-total {
+    color: #fff!important;
+}
+
+#content .breadcrumb a:link,
+#content .breadcrumb a:visited,
+#content .alert a:link, #content .alert a:visited {
+    color: #777;
+}
+
+#content .breadcrumb a:hover,
+#content .alert a:hover {
+    color:#000;
+}
+
+#content:not(.product_page-right, .button-prod) a:link,
+#content:not(.product_page-right, .button-prod) a:visited
+{
+    color: #ff4f02;
+}
+#content:not(.product_page-right, .button-prod) a:hover
+{
+    color: #717171;
+}
+
+#content .product_page-right a.button-adviser {
+    background-color: #717171;
+    color: #ffffff!important;
+}
+
+#content .product_page-right a.button-adviser {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 31px;
+    padding: 6px 11px 4px 11px;
+    cursor: pointer;
+}
+
+#content .product_page-right .button-adviser:hover,
+#compare-total:hover {
+    background-color: #ff4f02 !important;
+    color:#ffffff !important;
+}
+
+a.button-prod {
+    color: #fff !important;
+}

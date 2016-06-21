@@ -1,0 +1,97 @@
+<modification>
+
+	<id>Cookie Policy</id>
+	<version>2</version>
+	<vqmver>2.5.1</vqmver>
+	<author>the1path.com</author>
+
+	<file name="catalog/controller/common/footer.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$this->load->language('common/footer');
+			]]></search>
+			<add><![CDATA[
+				$this->load->language('module/cookie');
+				
+				$text_strings = array(
+					'text_before',
+					'link_text',
+					'text_after',
+					'accept_text',
+					'cookie_url'
+				);
+				
+				foreach ($text_strings as $text) {
+					$data[$text] = $this->language->get($text);
+				}
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/common/footer.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+				</body>
+			]]></search>
+			<add><![CDATA[
+				<?php
+				global $config;
+				if($config->get('cookiepolicy_status') == 1) { 
+				?>
+					<script type="text/javascript" >
+						var text_before = "<?php echo $text_before; ?>";
+						var link_text = "<?php echo $link_text; ?>";
+						var text_after = "<?php echo $text_after; ?>";
+						var accept_text = "<?php echo $accept_text; ?>";
+						var cookie_url = "<?php echo $config->get('cookiepolicy_url'); ?>";
+					</script>
+					<script src="catalog/view/javascript/jquery.cookie.js"></script>
+					<script src="catalog/view/javascript/jquery.cookiecuttr.js"></script>
+					<link rel="stylesheet" href="catalog/view/javascript/cookie.css">
+					<style>
+						a.cc-cookie-accept {
+							color: <?php echo $config->get('cookiepolicy_accept_text_colour'); ?>;
+							background: <?php echo $config->get('cookiepolicy_accept_button_colour'); ?>;
+						}
+						a.cc-cookie-accept:hover {
+							color: <?php echo $config->get('cookiepolicy_accept_text_hover'); ?>;
+							background: <?php echo $config->get('cookiepolicy_accept_button_hover'); ?>;
+						}
+						.cc-cookies, .cc-cookies a {
+							color: <?php echo $config->get('cookiepolicy_text_colour'); ?>;
+						}
+						.cc-cookies:before {
+							opacity: <?php echo $config->get('cookiepolicy_opacity'); ?>;
+							background: <?php echo $config->get('cookiepolicy_background_colour'); ?>;
+						}
+						<?php if($config->get('cookiepolicy_rounded_corners')!='') { ?>
+							a.cc-cookie-accept {
+								-webkit-border-radius: 3px 3px 3px 3px;
+								border-radius: 3px 3px 3px 3px;
+							}
+						<?php }?>
+					</style>
+					
+					<?php
+						switch ($config->get('cookiepolicy_position')) { 
+							case "1":
+								echo '<style>.cc-cookies{bottom:0;}</style>';
+								break; 
+							case "2":
+								echo '<style>.cc-cookies{top:0;}</style>';
+								break;
+							case "3":
+								echo '<style>.cc-cookies{padding:15%; height:100%; top:0;}</style>';
+								break;
+						}
+					?>
+					<script>
+						$(document).ready(function () {
+							$.cookieCuttr();	
+						});
+					</script>
+				<?php } ?>
+			]]></add>
+		</operation>
+	</file>
+	
+</modification>

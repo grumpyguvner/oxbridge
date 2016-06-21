@@ -1,0 +1,2 @@
+
+0 16 * * * php /var/www/vhosts/oxbridgehomelearning.uk/httpdocs/vendors/abandonedcarts/sendReminder.php 

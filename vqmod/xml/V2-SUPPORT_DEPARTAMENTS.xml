@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <id>Contact Us Support Departaments</id>
+    <version>1.0</version>
+    <vqmver>2.x</vqmver>
+    <author>http://www.opencartextensions.eu</author>
+        
+    <file name="catalog/controller/information/contact.php">
+        <operation>
+            <search position="after"><![CDATA[
+            $this->load->language('information/contact');
+            ]]></search>
+            <add><![CDATA[
+            $this->load->model('module/support_departaments');
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+            ]]></search>
+            <add><![CDATA[
+            $installed = $this->model_module_support_departaments->checkInstalled();
+            if($installed) {
+            $to = $this->model_module_support_departaments->getDepartamentByEmail($this->request->post['subtopic_id']);
+            $to_master = $this->model_module_support_departaments->getDepartamentByMasterEmail($this->request->post['departament_group_id']);
+            $phone_number = $this->request->post['phone'];
+            }
+
+
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="replace"><![CDATA[
+            $mail->setTo($this->config->get('config_email'));
+            ]]></search>
+            <add><![CDATA[
+            $mail->setTo(((!$to['email'])?$this->config->get('config_email'):$to['email']));
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            $mail->send();
+            ]]></search>
+            <add><![CDATA[
+            if(isset($to_master['email']) && $to_master['email']!=''){
+                $mail = new Mail();
+                $mail->protocol = $this->config->get('config_mail_protocol');
+                $mail->parameter = $this->config->get('config_mail_parameter');
+                $mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+                $mail->smtp_username = $this->config->get('config_mail_smtp_username');
+                $mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+                $mail->smtp_port = $this->config->get('config_mail_smtp_port');
+                $mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');			
+                $mail->setTo($to_master['email']);
+                $mail->setFrom($this->request->post['email']);
+                $mail->setSender($this->request->post['name']);
+                $mail->setSubject(sprintf($this->language->get('email_subject'), $this->request->post['name']));
+                $mail->setText($this->request->post['enquiry'] . "\n\nPhone Number: " . $phone_number);
+                //$mail->send();
+            }
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            $data['text_comment'] = $this->language->get('text_comment');
+            ]]></search>
+            <add><![CDATA[
+            $data['text_select'] = $this->language->get('text_select');
+            $data['text_none'] = $this->language->get('text_none');
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            $data['entry_enquiry'] = $this->language->get('entry_enquiry');
+            ]]></search>
+            <add><![CDATA[
+            $data['entry_topic'] = $this->language->get('entry_topic');
+            $data['entry_subtopic'] = $this->language->get('entry_subtopic');
+            $data['entry_phone_number'] = $this->language->get('entry_phone_number');
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            $data['button_map'] = $this->language->get('button_map');
+            ]]></search>
+            <add><![CDATA[
+            $installed = $this->model_module_support_departaments->checkInstalled();
+            if($installed){
+                $data['departaments'] = $this->model_module_support_departaments->getDepartaments();
+            }
+            
+            if (isset($this->request->post['departament_group_id'])) {
+                $data['departament_group_id'] = $this->request->post['departament_group_id'];
+            } else {
+                $data['departament_group_id'] = '';
+            }
+
+            if (isset($this->request->post['subtopic_id'])) {
+                $data['subtopic_id'] = $this->request->post['subtopic_id'];
+            } else {
+                $data['subtopic_id'] = '';
+            }
+
+            if (isset($this->request->post['phone'])) {
+                $data['phone_number'] = $this->request->post['phone'];
+            } else {
+                $data['phone_number'] = '';
+            }
+
+            if (isset($this->error['topic'])) {
+                $data['error_topic'] = $this->error['topic'];
+            } else {
+                $data['error_topic'] = '';
+            }
+
+            if (isset($this->error['subtopic'])) {
+                $data['error_subtopic'] = $this->error['subtopic'];
+            } else {
+                $data['error_subtopic'] = '';
+            }
+
+            if (isset($this->error['phone_number'])) {
+                $data['error_phone_number'] = $this->error['phone_number'];
+            } else {
+                $data['error_phone_number'] = '';
+            }
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[
+            if ($this->config->get('config_google_captcha_status')) {
+            ]]></search>
+            <add><![CDATA[
+            $installed = $this->model_module_support_departaments->checkInstalled();
+
+            if ($installed > 0 && (!isset($this->request->post['departament_group_id']) || $this->request->post['departament_group_id'] == ''))
+            {
+                $this->error['topic'] = $this->language->get('error_topic');
+            }
+            
+            if ($installed > 0 && (!isset($this->request->post['subtopic_id']) || $this->request->post['subtopic_id'] == '')) {
+                $this->error['subtopic'] = $this->language->get('error_subtopic');
+            }
+
+            if ($installed > 0 && (!isset($this->request->post['phone']) || $this->request->post['phone'] == '')) {
+                $this->error['phone_number'] = $this->language->get('error_phone_number');
+            }
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after" offset="1"><![CDATA[
+            return !$this->error;
+            ]]></search>
+            <add><![CDATA[
+            public function departament() {
+                $json = array();
+
+                $this->load->model('module/support_departaments');
+                $installed = $this->model_module_support_departaments->checkInstalled();
+
+                if($installed) {
+                $departament_info = $this->model_module_support_departaments->getDepartament($this->request->get['departament_group_id']);
+                }
+            
+                if ($departament_info) {
+
+                    $json = array(
+                        'departament_group_id'  => $departament_info['departament_group_id'],
+                        'name'                  => $departament_info['name'],
+                        'subtopic'              => $this->model_module_support_departaments->getDepartamentById($this->request->get['departament_group_id'])
+
+                    ); 
+                }
+                $this->response->addHeader('Content-Type: application/json');
+                $this->response->setOutput(json_encode($json));
+            }
+            ]]></add>
+        </operation>
+    </file>
+    <file name="catalog/language/english/information/contact.php">
+        <operation>
+            <search position="before"><![CDATA[
+            // Entry
+            ]]></search>
+            <add><![CDATA[
+            $_['text_select']    = '--- Please Select ---';
+            $_['text_none']      = '--- None ---';
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[
+            // Email
+            ]]></search>
+            <add><![CDATA[
+            $_['entry_topic']    = 'Select Topic';
+            $_['entry_subtopic'] = 'Select Subtopic';
+            $_['entry_phone_number']    = 'Phone Number';
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[
+            // Errors
+            ]]></search>
+            <add><![CDATA[
+            $_['error_topic']    = 'Please select the topic and sub-topic that best match your reason for contacting us.';
+            $_['error_subtopic'] = 'Please select the topic and sub-topic that best match your reason for contacting us.';
+            $_['error_phone_number']    = 'Please enter your phone number.';
+            ]]></add>
+        </operation>
+    </file>
+    <file name="catalog/view/theme/*/template/information/contact.tpl">
+        <operation>
+            <search position="before" offset="1"><![CDATA[
+            <label class="col-sm-2 control-label" for="input-enquiry"><?php echo $entry_enquiry; ?></label>
+            ]]></search>
+            <add><![CDATA[
+            <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-phone"><?php echo $entry_phone_number; ?></label>
+                <div class="col-sm-10">
+                    <input type="text" name="phone" value="<?php echo $phone_number; ?>" id="input-phone" class="form-control">
+                    <?php if ($error_phone_number) { ?>
+                        <div class="text-danger"><?php echo $error_phone_number; ?></div>
+                    <?php } ?>
+                </div>
+            </div>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="before" offset="1"><![CDATA[
+            <label class="col-sm-2 control-label" for="input-enquiry"><?php echo $entry_enquiry; ?></label>
+            ]]></search>
+            <add><![CDATA[
+            <?php if(isset($departaments)){?>
+            <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_topic; ?></label>
+            <div class="col-sm-10">
+            <select name="departament_group_id" id="input-departament" class="form-control">
+                <option value=""><?php echo $text_select; ?></option>
+                <?php foreach ($departaments as $departament) { ?>
+                    <?php if ($departament['departament_group_id'] == $departament_group_id) { ?>
+                        <option value="<?php echo $departament['departament_group_id']; ?>" selected="selected"><?php echo $departament['name']; ?></option>
+                    <?php } else { ?>
+                        <option value="<?php echo $departament['departament_group_id']; ?>"><?php echo $departament['name']; ?></option>
+                    <?php } ?>
+                <?php } ?>
+            </select>
+            <?php if ($error_topic) { ?>
+                <div class="text-danger"><?php echo $error_topic; ?></div>
+            <?php } ?>
+            </div>
+            </div>
+            <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-subtopic"><?php echo $entry_subtopic; ?></label>
+            <div class="col-sm-10">
+                <select name="subtopic_id" id="input-subtopic" class="form-control">
+                </select>
+            <?php if ($error_subtopic) { ?>
+                <div class="text-danger"><?php echo $error_subtopic; ?></div>
+            <?php } ?>
+            </div>
+            </div>
+            <?php } ?>
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[
+            <?php echo $footer; ?>
+            ]]></search>
+            <add><![CDATA[
+            <script type="text/javascript"><!--
+            $('select[name=\'departament_group_id\']').on('change', function() {
+                $.ajax({
+                    url: 'index.php?route=information/contact/departament&departament_group_id=' + this.value,
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('select[name=\'departament_group_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+                    },
+                    complete: function() {
+                        $('.fa-spin').remove();
+                    },
+                    success: function(json) {
+
+                        html = '<option value=""><?php echo $text_select; ?></option>';
+
+                        if (json['subtopic'] && json['subtopic'] != '') {
+                            for (i = 0; i < json['subtopic'].length; i++) {
+                                html += '<option value="' + json['subtopic'][i]['departament_id'] + '"';
+
+                                if (json['subtopic'][i]['departament_id'] == '<?php echo $subtopic_id; ?>') {
+                                    html += ' selected="selected"';
+                                }
+
+                                html += '>' + json['subtopic'][i]['name'] + '</option>';
+                            }
+                        } else {
+                            html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+                        }
+
+                        $('select[name=\'subtopic_id\']').html(html);
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            });
+
+            $('select[name=\'departament_group_id\']').trigger('change');
+            //--></script>
+            ]]></add>
+        </operation>
+    </file>
+</modification>

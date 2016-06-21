@@ -1,0 +1,755 @@
+/* Generic Styles */
+
+.icustomfooter-wrapper ~ footer {
+	margin-top: 0;	
+}
+
+.icustomfooter-wrapper .clearfix {
+	display: block;
+	height: 1%;
+}
+
+.icustomfooter-wrapper .clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.fontfamilyinherit {
+	font-family: inherit;	
+}
+
+.fontfamilyarialhelvetica {
+	font-family: Arial, Helvetica, sans-serif;	
+}
+
+.fontfamilygeorgiatimesnewroman {
+	font-family:Georgia, "Times New Roman", Times, serif;	
+}
+
+.fontfamilytrebuchetms {
+	font-family: Trebuchet MS;	
+}
+
+.overflowhidden .iWidgets .iWidget {
+	overflow:hidden;	
+}
+
+.overflowauto .iWidgets .iWidget {
+	overflow:auto;	
+}
+
+.icustomfooter-wrapper, .icustomfooter-wrapper *  {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.icustomfooter-wrapper {
+	margin: 0 auto;
+	padding: 0;	
+}
+
+#iCustomFooter, #icustomfooter_default_footer  {
+	margin: 0 auto;
+	padding: 0;
+}
+
+#iCustomFooter .iWidgets {
+	padding: 0 10px;
+	margin: 0;
+	font-size: 0;	
+}
+
+#iCustomFooter .iWidgets .iWidget {
+	float: left;
+	margin: 0;
+	padding: 10px 15px;
+	list-style: none;
+	font-size: 13px;
+	line-height: 18px;
+}
+
+#iCustomFooter .iWidgets .iWidget ul {
+	margin: 0;
+	padding: 0;
+}
+
+#iCustomFooter .iWidgets .iWidget ul li {
+	margin: 0;
+	padding: 0;
+	list-style: none;	
+}
+
+#iCustomFooter .iWidgets .iWidget h2 {
+	margin: 0;
+	padding: 0 0 15px 0;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 20px;
+	color: #000000;
+}
+
+#iCustomFooter .iWidgets .iWidget p {
+	padding: 0;
+	margin: 0 0 5px 0;
+	font-weight: normal;
+	font-size: 13px;	
+	line-height: 18px;
+	color: #666666;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactUs .iContactsListing li {	
+	margin: 10px 0;
+	padding: 0 0 0 38px;
+	min-height: 28px;
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: normal;
+	color: #666666;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm form {
+	margin: 0;
+	padding: 0;
+	font-size: 0;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm hr {
+	margin: 10px 0;
+	border: 0;
+	border-top: 1px solid #e2e2e2;	
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm label {
+	font-size: 13px;
+	line-height: 18px;
+	font-weight: normal;
+	padding: 0 10px 0 0;
+	margin: 0;
+	display: inline-block;
+	color: #666666;
+	width: 30%;
+	vertical-align: middle;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm  input[type=text] {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	padding: 5px;
+	background: #ffffff;
+	border: 1px solid #e2e2e2;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	width: 70%;
+	max-width: 70%;
+	font-size: 12px;
+	color: #666666;
+	height: 34px;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm label[for="contactMessage"] {
+	vertical-align: top;	
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm textarea {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0;
+	padding: 5px;
+	background: #ffffff;
+	border: 1px solid #e2e2e2;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	width: 70%;
+	max-width: 70%;
+	font-size: 12px;
+	color: #666666;
+	height: 80px;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-captcha-holder {
+	display: inline-block;
+	width: 40%;
+	text-align: left;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-captcha-holder img {
+	height: 40px;
+	width: auto;
+	margin: 0;
+	padding: 0;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-captcha-input {
+	display: inline-block;
+	width: 60%;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-captcha-input input[type=text] {
+	width: 100%;
+	max-width: 100%;
+	height: 40px;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-contact-submit {
+	text-align: right;
+	margin: 15px 0 0 0;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-submit-btn {
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: normal;
+	border: none;
+	background: #229ac8;
+	border: 1px solid #229ac8;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	padding: 10px 15px;
+	margin: 0;
+	text-align: center;
+	display: inline-block;
+	color: #ffffff;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .flashmessage {
+	background-color: transparent;
+	font-size: 12px;
+	line-height: 14px;
+	font-style: italic;
+	margin: 0;
+	padding: 0;	
+	color: #54AE0D;
+	display: block;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .flashmessage span {
+	margin-bottom: 10px;
+	display: block;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .redflashmessage {
+	background-color: transparent;
+	font-size: 12px;
+	line-height: 14px;
+	font-style: italic;
+	margin: 0;
+	padding: 0;
+	color: #E44015;
+	display: block;
+}
+
+#iCustomFooter .iWidgets .iWidget.iContactForm .redflashmessage span {
+	margin-bottom: 10px;
+	display: block;	
+}
+
+#iCustomFooter .iWidgets .iWidget.iGoogleMaps #iCustomFooterGoogleMap {
+	height: 100%;	
+}
+
+#icustomfooter_default_footer .icustomfooter_default_footer_wrapper {
+	padding: 0 10px;
+	font-size: 0;
+}
+
+#icustomfooter_default_footer .footerDivider {
+	height: 1px;
+	margin: 0 15px;
+}
+
+#icustomfooter_default_footer .wrapper {
+	font-size: 12px;
+	color: #757575;
+	line-height: 18px;
+	width: 100%;
+	padding: 0 15px;
+}
+
+#icustomfooter_default_footer .wrapper table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+	margin:0;
+	padding:0;
+}
+
+#icustomfooter_default_footer .wrapper table td {
+	margin: 0;
+	padding: 0;
+	border: none;
+	font-size: 0;
+	vertical-align: middle;
+}
+
+#icustomfooter_default_footer .wrapper table td ul {
+	margin: 0;
+	padding: 0;	
+}
+
+#icustomfooter_default_footer .wrapper table td ul li {
+	margin: 0;
+	padding: 0;
+	list-style: none;	
+}
+
+#icustomfooter_default_footer .wrapper > table > tbody > tr > td {
+	padding: 10px 0;	
+}
+
+#icustomfooter_default_footer .payment-methods {
+	padding: 0;
+	margin: 0;
+}
+
+#icustomfooter_default_footer .payment-methods table {
+	width: 100%;
+	text-align: right;
+}
+
+#icustomfooter_default_footer .payment-methods table td img {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
+#icustomfooter_default_footer h3 {
+	margin: 0 0 15px 0;
+	padding: 0;
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: normal;
+	padding: 0;
+	background-color:transparent;
+}
+
+#icustomfooter_default_footer .column {
+	display: inline-block;
+	margin: 0;
+	padding: 10px 15px;
+	vertical-align: top;
+}
+
+#icustomfooter_default_footer .column > ul {
+	margin: 0;
+	padding: 0;
+}
+
+#icustomfooter_default_footer .column > ul > li {
+	margin: 0 0 3px 0;
+	padding: 0;
+	list-style: none;
+}
+
+#icustomfooter_default_footer .column ul > li > a {
+	text-decoration: none;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	line-height: 16px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#icustomfooter_default_footer .column a:hover {
+	text-decoration: none;
+}
+
+#icustomfooter_default_footer #powered {
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	clear: none;
+	font-size: 11px;
+}
+
+
+#icustomfooter_default_footer #powered a {
+	font-size: 11px;
+	text-decoration: none;	
+}
+
+#icustomfooter_default_footer #powered a:hover {
+	text-decoration: underline;
+}
+
+#icustomfooter_default_footer #powered.rightAlign {
+	text-align: right;
+}
+
+#icustomfooter_default_footer #powered.leftAlign {
+	text-align: left;
+}
+
+/* End of Generic Styles */
+
+
+/* iCustomFooter Flat Layout */
+
+#icustomfooter-custom.flatfooterlayout {
+	background: #eeeeee;
+	padding: 20px 0;
+}
+
+.flatfooterlayout #iCustomFooter .iWidgets {
+	padding: 0;	
+}
+
+.flatfooterlayout .iWidgets .iWidget h2 {
+	color: #000000;
+}
+
+.flatfooterlayout .iWidgets .iWidget p {
+	color: #666666;
+}
+
+#icustomfooter-informational.flatfooterlayout {
+	background: #212325;
+	padding: 20px 0;
+}
+
+.flatfooterlayout #icustomfooter_default_footer .icustomfooter_default_footer_wrapper {
+	padding: 0;	
+}
+
+.flatfooterlayout #icustomfooter_default_footer .wrapper {
+	padding-top: 20px;	
+}
+
+.flatfooterlayout #icustomfooter_default_footer .column {
+	padding-bottom: 25px;	
+}
+
+.flatfooterlayout #icustomfooter_default_footer .column h3 {
+	color: #ffffff;
+}
+
+.flatfooterlayout #icustomfooter_default_footer .column a {
+	color: #a6a6a6;
+}
+
+.flatfooterlayout #icustomfooter_default_footer .column a:hover {
+	color: #ffffff;	
+}
+
+.flatfooterlayout #icustomfooter_default_footer .footerDivider {
+	background: #333537;	
+}
+
+#icustomfooter_default_footer #powered {
+	color: #888888;	
+}
+
+#icustomfooter_default_footer #powered a {
+	color: #888888;	
+}
+
+/* End of iCustomFooter Flat Layout */
+
+
+/* iCustomFooter White Pattern */
+
+#icustomfooter-custom.whitebgpattern {
+	background:url(../image/icustomfooter/bgpatt.png);
+	-moz-box-shadow: 0 1px 5px #ccc;
+	-webkit-box-shadow: 0 1px 5px #ccc;
+	box-shadow: 0 1px 5px #ccc;
+	padding: 10px 0;
+}
+
+.whitebgpattern #iCustomFooter .iWidgets .iWidget h2 {
+	border-bottom: 1px dotted #cccccc;
+	padding: 0 0 5px 0;
+	margin: 0 0 10px 0;
+}
+
+.whitebgpattern #iCustomFooter .iWidgets .iWidget p {
+	color:#747474;
+}
+
+.whitebgpattern #iCustomFooter .iWidgets .iWidget.iContactUs .iContactsListing li {
+	color:#747474;	
+}
+
+.whitebgpattern #iCustomFooter .iWidgets .iWidget.iContactForm label {
+	color:#747474;	
+}
+
+.whitebgpattern #iCustomFooter .iWidgets .iWidget.iContactForm hr {
+	border-top: 1px dotted #cccccc;
+}
+
+.whitebgpattern #iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-submit-btn {
+	padding: 3px 8px;
+	color:#ffffff;
+	background-color:#4e9cc6;
+	border: 1px solid #ffffff;
+	outline:2px solid #4e9cc6;
+	font-size:12px;
+	margin: 0 2px 0 0;
+	font-weight: normal;
+	line-height: 17px;
+	cursor: pointer;
+}
+
+#icustomfooter-informational.whitebgpattern {
+	-moz-box-shadow: 0 1px 5px #ccc;
+	-webkit-box-shadow: 0 1px 5px#ccc;
+	box-shadow: 0 1px 5px #ccc;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	background: #ffffff;
+	padding:10px 0;
+	overflow: visible;
+	border-radius: 0px;
+}
+
+.whitebgpattern #icustomfooter_default_footer .footerDivider {
+	background: #f5f5f5;	
+}
+
+.whitebgpattern #icustomfooter_default_footer .column ul > li > a {
+	color: #777;	
+}
+
+.whitebgpattern #icustomfooter_default_footer .column ul > li > a:hover {
+	text-decoration: underline;	
+}
+
+.whitebgpattern #icustomfooter_default_footer .column > ul > li > a:before {
+	color:#4e9cc6;
+	content:'\00BB';
+	display: inline-block;
+	vertical-align: top;
+	font-size: 14px;
+	line-height: 14px;
+	margin: 0 3px 0 0;
+}
+
+/* End of iCustomFooter White Pattern */
+
+
+/* iCustomFooter Dark Pattern */
+
+#icustomfooter-custom.darkbgpattern {
+	background:url(../image/icustomfooter/bgpatt-dark.png);
+	-moz-box-shadow: 0 1px 5px #ccc;
+	-webkit-box-shadow: 0 1px 5px #ccc;
+	box-shadow: 0 1px 5px #ccc;
+	padding: 10px 0;
+}
+
+.darkbgpattern #iCustomFooter .iWidgets .iWidget h2 {
+	color:#E3E6E8;
+	border-bottom: 1px dotted #9198A2;
+	padding: 0 0 5px 0;
+	margin: 0 0 10px 0;
+}
+
+.darkbgpattern #iCustomFooter .iWidgets .iWidget p {
+	color:#dadada;
+}
+
+.darkbgpattern #iCustomFooter .iWidgets .iWidget.iContactUs .iContactsListing li {
+	color:#dadada;	
+}
+
+.darkbgpattern #iCustomFooter .iWidgets .iWidget.iContactForm label {
+	color:#dadada;	
+}
+
+.darkbgpattern #iCustomFooter .iWidgets .iWidget.iContactForm hr {
+	border-top: 1px dotted #eeeeee;
+}
+
+.darkbgpattern #iCustomFooter .iWidgets .iWidget.iContactForm .icustomfooter-submit-btn {
+	padding: 3px 8px;
+	color:#ffffff;
+	background-color:#4e9cc6;
+	border: 1px solid #ffffff;
+	outline:2px solid #4e9cc6;
+	font-size:12px;
+	margin: 0 2px 0 0;
+	font-weight: normal;
+	line-height: 17px;
+	cursor: pointer;
+}
+
+#icustomfooter-informational.darkbgpattern {
+	-moz-box-shadow: 0 1px 5px #cccccc;
+	-webkit-box-shadow: 0 1px 5px #cccccc;
+	box-shadow: 0 1px 5px #cccccc;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	background: #ffffff;
+	padding:10px 0;
+	overflow: visible;
+	border-radius: 0px;
+}
+
+.darkbgpattern #icustomfooter_default_footer .footerDivider {
+	background: #f5f5f5;	
+}
+
+.darkbgpattern #icustomfooter_default_footer .column ul > li > a {
+	color: #777;	
+}
+
+.darkbgpattern #icustomfooter_default_footer .column ul > li > a:hover {
+	text-decoration: underline;	
+}
+
+.darkbgpattern #icustomfooter_default_footer .column > ul > li > a:before {
+	color:#4e9cc6;
+	content:'\00BB';
+	display: inline-block;
+	vertical-align: top;
+	font-size: 14px;
+	line-height: 14px;
+	margin: 0 3px 0 0;
+}
+
+/* End of iCustomFooter Dark Pattern */
+
+
+/* iCustomFooter Custom Pattern */
+
+#icustomfooter-custom.usebackgroundcolor {
+	padding: 10px 0;
+}
+
+#icustomfooter-informational.usebackgroundcolor {
+	padding: 10px 0;	
+}
+
+.usebackgroundcolor #iCustomFooter .iWidgets .iWidget h2 {
+	padding: 0 0 5px 0;
+	margin: 0 0 10px 0;
+}
+
+.usebackgroundcolor #icustomfooter_default_footer .column ul > li > a:hover {
+	text-decoration: underline;	
+}
+
+/* End of iCustomFooter Custom Pattern */
+
+
+
+/* White Contact Us Icons */
+
+.whiteicons .iWidgets .iWidget .iAddress {
+	background:url(../image/icustomfooter/dark/address-icon.png) 0 0 no-repeat;
+}
+
+.whiteicons .iWidgets .iWidget .iPhone {
+	background:url(../image/icustomfooter/dark/phone-icon.png) 0 0 no-repeat;
+}
+
+.whiteicons .iWidgets .iWidget .iFax {
+	background:url(../image/icustomfooter/dark/fax-icon.png) 0 0 no-repeat;
+}
+
+.whiteicons .iWidgets .iWidget .iEmail {
+	background:url(../image/icustomfooter/dark/email-icon.png) 0 0 no-repeat;
+}
+
+.whiteicons .iWidgets .iWidget .iSkype {
+	background:url(../image/icustomfooter/dark/skype-icon.png) 0 0 no-repeat;
+}
+
+/* End of White Contact Us Icons */
+
+
+/* Blue Contact Us Icons */
+
+.blueicons .iWidgets .iWidget .iAddress {
+	background:url(../image/icustomfooter/white/address-icon.png) 0 0 no-repeat;
+}
+
+.blueicons .iWidgets .iWidget .iPhone {
+	background:url(../image/icustomfooter/white/phone-icon.png) 0 0 no-repeat;
+}
+
+.blueicons .iWidgets .iWidget .iFax {
+	background:url(../image/icustomfooter/white/fax-icon.png) 0 0 no-repeat;
+}
+
+.blueicons .iWidgets .iWidget .iEmail {
+	background:url(../image/icustomfooter/white/email-icon.png) 0 0 no-repeat;
+}
+
+.blueicons .iWidgets .iWidget .iSkype {
+	background:url(../image/icustomfooter/white/skype-icon.png) 0 0 no-repeat;
+}
+
+/* End of Blue Contact Us Icons */ 
+
+
+/* Green Contact Us Icons */
+
+.greenicons .iWidgets .iWidget .iAddress {
+	background:url(../image/icustomfooter/green/address-icon.png) 0 0 no-repeat;
+}
+
+.greenicons .iWidgets .iWidget .iPhone {
+	background:url(../image/icustomfooter/green/phone-icon.png) 0 0 no-repeat;
+}
+
+.greenicons .iWidgets .iWidget .iFax {
+	background:url(../image/icustomfooter/green/fax-icon.png) 0 0 no-repeat;
+}
+
+.greenicons .iWidgets .iWidget .iEmail {
+	background:url(../image/icustomfooter/green/email-icon.png) 0 0 no-repeat;
+}
+
+.greenicons .iWidgets .iWidget .iSkype {
+	background:url(../image/icustomfooter/green/skype-icon.png) 0 0 no-repeat;
+}
+
+/* End of Green Contact Us Icons */
+
+
+/* Social Media Buttons */
+
+#icustomfooter_default_footer .wrapper .iButtons .iButton {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 8px 0 0;
+	height: 20px;
+}
+
+.iButtons .iFacebook {
+	width: 	90px;
+	overflow:hidden;
+}
+
+.iTweets .iTweet {
+	margin-bottom: 15px;	
+}
+
+.iTweets .iTweet > span {
+	display: block;
+	padding-left: 25px;	
+}
+
+.iTweets .iTweet .tweetText {
+	background:url(../image/icustomfooter/tweet.png) no-repeat 0 4px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:12px;
+	font-style:italic;
+}
+
+.iTweets .iTweet .tweetDate {
+	margin-top: 2px;	
+}
+
+/* End of Social Media Buttons */

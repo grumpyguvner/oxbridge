@@ -1,0 +1,307 @@
+/*
+ * Category Wall (ShowCase) v1.0.3
+ * Copyright 2015, iDiY
+ * Support: info@idiy.club
+ */
+
+.showcase:before,
+.showcase:after {
+  display: table;
+  content: ' ';
+}
+.showcase:after {
+  clear: both;
+}
+.showcase img {
+  display: block;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  vertical-align: middle;
+  border: 0;
+}
+.showcase .sc-child {
+  display: none;
+}
+.showcase .sc-item,
+.showcase .sc-subitem {
+  line-height: 1.42857143;
+  display: block;
+  margin-bottom: 20px;
+  padding: 4px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+.showcase .sc-subitem {
+  margin-bottom: 0;
+}
+.showcase .sc-item:hover,
+.showcase .sc-subitem:hover {
+  border-color: #ffc47a;
+}
+.showcase .sc-item:after {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -8px;
+  content: '';
+  border-top: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+.showcase .sc-item.sc-active {
+  border-bottom-color: #ffc47a;
+}
+.showcase .sc-item.sc-active:after {
+  border-top-color: #ffc47a;
+}
+.showcase .sc-item a,
+.showcase .sc-subitem a {
+  display: block;
+  overflow: hidden;
+  text-decoration: none;
+  color: #333;
+  outline: none;
+}
+.showcase .sc-item-name,
+.showcase .sc-subitem-name {
+  font-weight: bold;
+  padding: 15px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.showcase .sc-item a:hover .sc-item-name,
+.showcase .sc-subitem a:hover .sc-item-name {
+  color: #000;
+}
+.showcase .sc-item-name span,
+.showcase .sc-subitem-name span {
+  display: inline-block;
+}
+.showcase .sc-item-name .sc-item-count,
+.showcase .sc-subitem-name .sc-subitem-count {
+  line-height: 1;
+  min-width: 10px;
+  padding: 3px 7px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+.showcase .sc-item-desc,
+.showcase .sc-subitem-desc {
+  margin-top: -20px;
+  padding: 15px;
+  opacity: .75;
+}
+.showcase .sc-btn {
+  margin: 15px;
+  text-transform: uppercase;
+}
+.showcase .sc-btn a.btn {
+  border: 1px solid #ddd;
+  background-color: #f7f7f7;
+  box-shadow: none;
+}
+.showcase .sc-btn a.btn:hover {
+  color: #fff;
+  background-color: #555;
+}
+.showcase .sc-info-wrapper {
+  margin-bottom: 20px;
+}
+.showcase .sc-info-title {
+  font-size: 15px;
+  margin: 0 1px 5px 1px;
+}
+.showcase .sc-info-title a {
+  color: #333;
+}
+.showcase .sc-info-desc {
+  margin: 0 1px 15px 1px;
+  opacity: .9;
+}
+
+/*  Carousel  */
+
+.showcase .sc-carousel {
+  position: relative;
+  z-index: 1;
+  display: none;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+.showcase .sc-carousel .scc-stage {
+  position: relative;
+  -ms-touch-action: pan-Y;
+}
+.showcase .sc-carousel .scc-stage:after {
+  line-height: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+  height: 0;
+  content: '.';
+}
+.showcase .sc-carousel .scc-stage-outer {
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: translate3d(0px,0px,0px);
+}
+.showcase .sc-carousel .scc-item {
+  position: relative;
+  float: left;
+  min-height: 1px;
+  -webkit-backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+.showcase .sc-carousel .scc-nav.disabled,
+.showcase .sc-carousel .scc-dots.disabled {
+  display: none;
+}
+.showcase .sc-carousel .scc-nav .scc-prev,
+.showcase .sc-carousel .scc-nav .scc-next,
+.showcase .sc-carousel .scc-dot {
+  cursor: pointer;
+  cursor: hand;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -khtml-user-select: none;
+}
+.showcase .sc-carousel.scc-loaded {
+  display: block;
+}
+.showcase .sc-carousel.scc-loading {
+  display: block;
+  opacity: 0;
+}
+.showcase .sc-carousel.scc-hidden {
+  opacity: 0;
+}
+.showcase .sc-carousel.scc-refresh .scc-item {
+  display: none;
+}
+.showcase .sc-carousel.scc-drag .scc-item {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.showcase .sc-carousel.scc-grab {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+}
+.no-js .showcase .sc-carousel {
+  display: block;
+}
+
+/*  Carousel Theme  */
+
+.sc-theme .scc-nav div {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  margin-top: -30px;
+  padding: 7px 5px;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0,0,0,.25);
+}
+.sc-subitems-row .sc-theme .scc-nav div {
+  margin-top: -20px;
+}
+.sc-theme .scc-nav div i {
+  font-size: 24px;
+}
+.sc-theme .scc-prev {
+  left: 5px;
+}
+.sc-theme .scc-next {
+  right: 5px;
+}
+.sc-theme .scc-nav [class*='scc-']:hover {
+  text-decoration: none;
+  color: #fff;
+  background: #ffc47a;
+}
+.sc-theme .scc-nav .disabled {
+  cursor: default;
+  opacity: 0;
+}
+.sc-items-row .sc-theme .scc-dots {
+  position: absolute;
+  top: -30px;
+  right: 0;
+}
+.sc-subitems-row .sc-theme .scc-dots {
+  position: absolute;
+  width: 100%;
+}
+.sc-theme .scc-dots {
+  line-height: 1;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.sc-theme .scc-dots .scc-dot {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+.sc-theme .scc-dots .scc-dot span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  -webkit-transition: opacity .3s ease;
+  -moz-transition: opacity .3s ease;
+  -ms-transition: opacity .3s ease;
+  -o-transition: opacity .3s ease;
+  transition: opacity .3s ease;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  background: #d6d6d6;
+  -webkit-backface-visibility: visible;
+}
+.sc-theme .scc-dots .scc-dot.active span,
+.sc-theme .scc-dots .scc-dot:hover span {
+  background: #ffc47a;
+}
+.showcase .sc-item,
+.showcase .sc-subitem,
+.showcase .sc-item a,
+.showcase .sc-subitem a,
+.showcase .sc-item-name,
+.showcase .sc-subitem-name,
+.showcase .sc-item:after,
+.showcase .sc-btn a.btn,
+.sc-theme .scc-nav div {
+  -webkit-transition: all .3s ease;
+  -moz-transition: all .3s ease;
+  -ms-transition: all .3s ease;
+  -o-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+
+/* Subitems Background Style */
+
+.showcase .sc-info-wrapper {
+  padding: 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, .25);
+  -moz-box-shadow: inset 0 0 1px rgba(0, 0, 0, .25);
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, .25);
+}

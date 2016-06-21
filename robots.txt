@@ -1,0 +1,8 @@
+user-agent: *
+Disallow: /*?route=checkout/
+Disallow: /*?route=account/
+Disallow: /*?route=affiliate/
+Allow: /*?route=account/return/add
+Allow: /*?route=account/voucher
+
+Sitemap: http://oxbridgehomelearning.uk/sitemap.xml

@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Manufacturer Extended</id>
+	<version>3.0</version>
+    <vqmver>2.x</vqmver>
+    <author>Benjamin Verkleij / Desto Media</author>
+
+    <!-- ADMIN EDITS -->
+    <file name="admin/controller/catalog/manufacturer.php">
+        <operation error="log" info="Add the Manufacturer Extended info to the controller in the getForm method">
+        	<search position="after">
+                <![CDATA[$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);]]>
+            </search>
+            <add>
+                <![CDATA[$data['man_ext'] = $this->model_catalog_manufacturer->getManufacturerDescription($this->request->get['manufacturer_id']);]]>
+            </add>
+		</operation>
+
+        <operation error="log" info="Add language strings to controller">
+        	<search position="before">
+                <![CDATA[$data['entry_name'] = $this->language->get('entry_name');]]>
+            </search>
+            <add><![CDATA[
+                $data['entry_description'] = $this->language->get('entry_description');
+                $data['entry_meta_description'] = $this->language->get('entry_meta_description');
+                $data['entry_meta_keywords'] = $this->language->get('entry_meta_keywords');
+                $data['entry_html_title'] = $this->language->get('entry_html_title');
+            ]]></add>
+        </operation>
+
+        <operation error="log" info="Add languages to getForm method">
+            <search position="after">
+                <![CDATA[protected function getForm() {]]>
+            </search>
+            <add>
+                <![CDATA[
+                $this->load->model('localisation/language');
+                $data['languages'] = $this->model_localisation_language->getLanguages();
+                ]]>
+            </add>
+        </operation>
+	</file>
+
+
+    <file name="admin/language/*/catalog/manufacturer.php">
+    	<operation error="log" info="Add translation to language file">
+			<search position="bottom">
+                <![CDATA[]]>
+            </search>
+            <add><![CDATA[
+            	$_['entry_description']         = 'Description:';
+            	$_['entry_meta_description']    = 'Meta Description:';
+            	$_['entry_meta_keywords']       = 'Meta Keywords:';
+            	$_['entry_html_title']          = 'HTML Title:';
+            ]]></add>
+        </operation>
+	</file>
+
+	
+	<file name="admin/model/catalog/manufacturer.php">
+    	<operation error="log" info="Add manufacturer description to manufacturer model: the addManufacturer method">
+			<search position="after">
+                <![CDATA[$manufacturer_id = $this->db->getLastId();]]>
+            </search>
+            <add>
+                <![CDATA[
+                if(isset($data['man_ext'])) {
+                    foreach ($data['man_ext'] as $language_id => $value) {
+                        if ($value['description'] || $value['meta_description'] || $value['meta_keywords'] || $value['html_title']) {
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_extended SET manufacturer_id ='" . (int)$manufacturer_id . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($value['description']) . "', html_title = '" . $this->db->escape($value['html_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keywords = '" . $this->db->escape($value['meta_keyword']) . "'");
+                        }
+                    }
+                }
+                ]]>
+            </add>
+        </operation>
+
+        <operation error="log" info="Add manufacturer description to manufacturer model: the editmanufacturer method">
+			<search position="after">
+                <![CDATA[$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET name = '" . $this->db->escape($data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");]]>
+            </search>
+            <add>
+                <![CDATA[
+            
+                $this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_extended WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+			    if(isset($data['man_ext'])) {
+                    foreach ($data['man_ext'] as $language_id => $value) {
+                        if ($value['description'] || $value['meta_description'] || $value['meta_keywords'] || $value['html_title']) {
+                            $this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_extended SET manufacturer_id ='" . (int)$manufacturer_id . "', language_id = '" . (int)$language_id . "', description = '" . $this->db->escape($value['description']) . "', html_title = '" . $this->db->escape($value['html_title']) . "', meta_description = '" . $this->db->escape($value['meta_description']) . "', meta_keywords = '" . $this->db->escape($value['meta_keyword']) . "'");
+                        }
+                    }
+                }
+				
+                ]]>
+            </add>
+        </operation>
+
+
+         <operation error="log" info="Add manufacturer description to manufacturer model: the getManufacturer method">
+			<search position="before">
+                <![CDATA[public function getManufacturer($manufacturer_id) {]]>
+            </search>
+            <add>
+                <![CDATA[
+
+                public function getManufacturerDescription($manufacturer_id) {
+                    $man_ext_data = array();
+                    $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_extended WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+                    foreach ($query->rows as $result) {
+                        $man_ext_data[$result['language_id']] = array(
+                            'description'      => $result['description'],
+                            'meta_description' => $result['meta_description'],
+                            'meta_keyword'     => $result['meta_keywords'],
+                            'html_title'       => $result['html_title'],
+                        );
+                    }
+                    return $man_ext_data;
+                }
+
+                ]]>
+            </add>
+        </operation>
+
+
+        <operation error="log" info="Hooks on to the deleteManufacturer method to delete the extended information when a manufacturer is deleted">
+            <search position="after">
+                <![CDATA[$this->event->trigger('pre.admin.delete.manufacturer', $manufacturer_id);]]>
+            </search>
+            <add>
+                <![CDATA[
+				    $this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_extended WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
+                ]]>
+            </add>
+        </operation>
+	</file>
+
+
+	<file name="admin/view/template/catalog/manufacturer_form.tpl">
+		<operation error="log" info="Add description textarea and editor to template view file">
+			<search position="before">
+                <![CDATA[</form>]]>
+            </search>
+			<add><![CDATA[
+
+              <div class="tab-content">
+              <div class="tab-pane active" id="tab-general">
+                  <ul class="nav nav-tabs" id="language">
+                      <?php foreach ($languages as $language) { ?>
+                      <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+                      <?php } ?>
+                  </ul>
+                  <div class="tab-content">
+                      <?php foreach ($languages as $language) { ?>
+                      <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-html-title<?php echo $language['language_id']; ?>"><?php echo $entry_html_title; ?></label>
+                              <div class="col-sm-10">
+                                  <input type="text" name="man_ext[<?php echo $language['language_id']; ?>][html_title]" id="input-html-title<?php echo $language['language_id']; ?>" class="form-control" value="<?php echo isset($man_ext[$language['language_id']]) ? $man_ext[$language['language_id']]['html_title'] : ''; ?>">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                              <div class="col-sm-10">
+                                  <textarea name="man_ext[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($man_ext[$language['language_id']]) ? $man_ext[$language['language_id']]['description'] : ''; ?></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
+                              <div class="col-sm-10">
+                                  <textarea name="man_ext[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($man_ext[$language['language_id']]) ? $man_ext[$language['language_id']]['meta_description'] : ''; ?></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keywords; ?></label>
+                              <div class="col-sm-10">
+                                  <textarea name="man_ext[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keywords; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($man_ext[$language['language_id']]) ? $man_ext[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
+                              </div>
+                          </div>
+                      </div>
+                      <?php } ?>
+                  </div>
+              </div>
+          </div>
+
+        <script type="text/javascript"><!--
+            <?php foreach ($languages as $language) { ?>
+                $('#input-description<?php echo $language['language_id']; ?>').summernote({height: 300});
+            <?php } ?>
+            //--></script>
+        <script type="text/javascript"><!--
+            $('#language a:first').tab('show');
+    //--></script>
+
+
+			]]>
+            </add>
+		</operation>
+	</file>
+
+    
+    <!-- CATALOG EDITS -->
+    <file name="catalog/controller/product/manufacturer.php">
+    	<operation error="log" info="Add image to index method">
+    		<search position="after">
+                <![CDATA['name' => $result['name'],]]>
+            </search>
+    		<add>
+                <![CDATA[
+				'image' =>  $this->model_tool_image->resize($result['image'], $this->config->get('manufacturer_extended_manufacturer_list_image_width'), $this->config->get('manufacturer_extended_manufacturer_list_image_height')),
+				'description' =>  html_entity_decode($this->model_catalog_manufacturer->getManufacturerExtendedDescription($result['manufacturer_id']), ENT_QUOTES, 'UTF-8'),
+    		    ]]>
+            </add>
+    	</operation>
+
+        <operation error="log" info="Add image to index method">
+            <search position="after">
+                <![CDATA[$data['continue'] = $this->url->link('common/home');]]>
+            </search>
+            <add>
+                <![CDATA[
+				$data['manufacturer_extended_show_image'] = $this->config->get('manufacturer_extended_show_image_in_list');
+				$data['manufacturer_extended_show_description'] = $this->config->get('manufacturer_extended_show_description_in_list');
+    		    ]]>
+            </add>
+        </operation>
+
+        <operation error="log" info="Add call to Manufacturer Extended Model">
+            <search position="after">
+                <![CDATA[$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);]]>
+            </search>
+            <add>
+                <![CDATA[
+                $manufacturer_extended = $this->model_catalog_manufacturer->getManufacturerExtended($manufacturer_id);
+                ]]>
+            </add>
+        </operation>
+
+    	<operation error="log" info="Add image and description to info method">
+    		<search position="after">
+                <![CDATA[$this->document->setTitle($manufacturer_info['name']);]]>
+            </search>
+    		<add>
+                <![CDATA[
+                    if(isset($manufacturer_extended['meta_description'])){
+                        $this->document->setDescription($manufacturer_extended['meta_description']);
+                    }
+                    if(isset($manufacturer_extended['meta_keywords'])){
+                        $this->document->setKeywords($manufacturer_extended['meta_keywords']);
+                    }
+                    if(isset($manufacturer_extended['html_title'])){
+                       $this->document->setTitle($manufacturer_extended['html_title']);
+                    }
+                    if(isset($manufacturer_extended['description'])){
+                        $data['manufacturer_description'] = html_entity_decode($manufacturer_extended['description'], ENT_QUOTES, 'UTF-8');
+                    }
+
+                    $data['manufacturer_name'] = $manufacturer_info['name'];
+
+                    if ($manufacturer_info['image']) {
+                        $data['manufacturer_image'] = $this->model_tool_image->resize($manufacturer_info['image'], $this->config->get('manufacturer_extended_manufacturer_info_image_width'), $this->config->get('manufacturer_extended_manufacturer_info_image_height'));
+                    } else {
+                        $data['manufacturer_image'] = false;
+                    }
+
+                    $data['manufacturer_extended_show_image_detail'] = $this->config->get('manufacturer_extended_show_image_in_detail');
+				    $data['manufacturer_extended_show_description_detail'] = $this->config->get('manufacturer_extended_show_description_in_detail');
+    		    ]]>
+            </add>
+    	</operation>
+
+    </file>
+
+
+    <file name="catalog/model/catalog/manufacturer.php">
+    	 <operation error="log" info="Add 2 custom models to the manufacturer models">
+			<search position="before">
+                <![CDATA[public function getManufacturers($data = array()) {]]>
+            </search>
+            <add>
+                <![CDATA[
+
+                 public function getManufacturerExtendedDescription($manufacturer_id) {
+                        $query = $this->db->query("SELECT description FROM " . DB_PREFIX . "manufacturer_extended WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND language_id = '". (int)$this->config->get('config_language_id') ."' ");
+                        if($query->row) {
+                                return $query->row['description'];
+                        } else {
+                                return '';
+                        }
+                 }
+
+                 public function getManufacturerExtended($manufacturer_id) {
+                        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_extended WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND language_id = '". (int)$this->config->get('config_language_id') ."' ");
+
+                        return $query->row;
+                 }
+
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+    <file name="catalog/view/theme/*/template/product/manufacturer_list.tpl">
+    	<operation error="log" info="Add Description and Image to template">
+			<search position="replace">
+                <![CDATA[<div class="col-sm-3"><a href="<?php echo $manufacturer['href']; ?>"><?php echo $manufacturer['name']; ?></a></div>]]>
+            </search>
+            <add>
+                <![CDATA[
+
+                <div class="col-sm-3">
+                    <?php if (($manufacturer_extended_show_image) && isset($manufacturer['image'])) { ?>
+					    <img src="<?php echo $manufacturer['image']; ?>" class="img-responsive img-thumbnail manufacturer-logo pull-left" style="margin-right:10px;"/>
+				    <?php } ?>
+                    <h4><a href="<?php echo $manufacturer['href']; ?>"><?php echo $manufacturer['name']; ?></a></h4>
+                    <?php if (($manufacturer_extended_show_description) && isset($manufacturer['description'])) { ?>
+                        <div class="manufacturer-description"><?php echo $manufacturer['description']; ?></div>
+                    <?php } ?>
+                </div>
+
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+
+     <file name="catalog/view/theme/*/template/product/manufacturer_info.tpl">
+         <operation error="log" info="Add Description and Image to template file">
+             <search position="replace">
+                 <![CDATA[<h2><?php echo $heading_title; ?></h2>]]>
+             </search>
+             <add>
+                 <![CDATA[
+                 <div id="manufacturer-details" class="clearfix">
+                     <h2><?php echo $heading_title; ?></h2>
+                     <?php if ($manufacturer_extended_show_image_detail && $manufacturer_image) { ?>
+                         <img src="<?php echo $manufacturer_image; ?>" alt="<?php echo $manufacturer_name; ?>" class="manufacturer-info-logo img-responsive img-thumbnail pull-left" style="margin-right:10px"/>
+                     <?php } ?>
+                     <?php if (($manufacturer_extended_show_description_detail) && isset($manufacturer_description)) { ?>
+                         <?php echo $manufacturer_description; ?>
+                     <?php } ?>
+                 </div>
+             ]]>
+             </add>
+         </operation>
+     </file>
+
+
+
+    <!-- SHOW MANUFACTURER ON PRODUCT PAGE -->
+    <file name="catalog/model/catalog/product.php">
+        <operation error="log" info="Add Manufacturer extended model to product model">
+            <search position="before">
+                <![CDATA[public function getProduct($product_id) {]]>
+            </search>
+            <add>
+                <![CDATA[
+
+                public function getManufacturerExtended($manufacturer_id) {
+                    $query = $this->db->query("SELECT m.name, m.image, me.description FROM " . DB_PREFIX . "manufacturer m LEFT JOIN " . DB_PREFIX . "manufacturer_extended me ON (m.manufacturer_id = me.manufacturer_id) WHERE me.manufacturer_id = '" . (int)$manufacturer_id . "' AND me.language_id = '". (int)$this->config->get('config_language_id') ."'");
+                    return $query->row;
+                }
+
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+    <file name="catalog/language/*/product/product.php">
+        <operation error="log" info="Add translation to language file">
+            <search position="bottom"><![CDATA[]]></search>
+            <add><![CDATA[
+                $_['tab_manufacturer'] = 'Manufacturer';
+                $_['text_more_from'] = 'More from';
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="catalog/model/catalog/product.php">
+        <operation error="log" info="Add get products from same manufacturer method">
+            <search position="before">
+                <![CDATA[public function getProductRelated($product_id) {]]>
+            </search>
+            <add>
+                <![CDATA[
+                public function getProductsFromSameManufacturer($manufacturer_id, $limit = 15, $current_product_id)
+                {
+                    $product_data = array();
+
+                    if(!$limit) {
+                        $limit = 15;
+                    }
+
+                    $query = $this->db->query("SELECT p.product_id FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND p.manufacturer_id = '". (int)$manufacturer_id ."' AND p.date_available <= NOW() AND p.product_id != '". (int)$current_product_id ."' AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY p.date_added DESC LIMIT " . (int)$limit);
+
+                    foreach ($query->rows as $result) {
+                        $product_data[] = $this->getProduct($result['product_id']);
+                    }
+
+                    return $product_data;
+                }
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+    <file name="catalog/controller/product/product.php">
+        <operation error="log" info="Add language string to controller">
+            <search position="after">
+                <![CDATA[$data['tab_description'] = $this->language->get('tab_description');]]>
+            </search>
+            <add><![CDATA[
+                if($this->config->get('manufacturer_extended_show_manufacturer_tab_product_page')) {
+                    $data['tab_manufacturer'] = $this->language->get('tab_manufacturer');
+                }
+
+                $data['text_more_from'] = $this->language->get('text_more_from');
+
+                $data['show_manufacturer_tab'] = $this->config->get('manufacturer_extended_show_manufacturer_tab_product_page');
+                $data['show_manufacturer_tab_image'] = $this->config->get('manufacturer_extended_show_tab_image');
+                $data['show_manufacturer_tab_description'] = $this->config->get('manufacturer_extended_show_tab_description');
+                $data['show_manufacturer_tab_products'] = $this->config->get('manufacturer_extended_show_tab_products');
+			]]></add>
+        </operation>
+        <operation error="log" info="Get Manufacturer Extended Data">
+            <search position="after">
+                <![CDATA[$data['manufacturers'] = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $product_info['manufacturer_id']);]]>
+            </search>
+            <add><![CDATA[
+                if($this->config->get('manufacturer_extended_show_manufacturer_tab_product_page')) {
+
+                    if($product_info['manufacturer_id']) {
+                        $manufacturer_extended =  $this->model_catalog_product->getManufacturerExtended($product_info['manufacturer_id']);
+                        if($manufacturer_extended) {
+                            $data['manufacturer_extended_description'] = html_entity_decode($manufacturer_extended['description'], ENT_QUOTES, 'UTF-8');
+                        } else {
+                            $data['manufacturer_extended_description'] = '';
+                        }
+                    }
+                }
+            ]]></add>
+        </operation>
+        <operation error="log" info="Get Manufacturer Extended Image">
+            <search position="after">
+                <![CDATA[$this->load->model('tool/image');]]>
+            </search>
+            <add><![CDATA[
+                if($this->config->get('manufacturer_extended_show_manufacturer_tab_product_page')) {
+                    if(isset($manufacturer_extended['image'])) {
+                        $data['manufacturer_extended_image'] = $this->model_tool_image->resize($manufacturer_extended['image'], $this->config->get('manufacturer_extended_product_page_image_width'), $this->config->get('manufacturer_extended_product_page_image_height'));
+                    } else {
+                        $data['manufacturer_extended_image'] = '';
+                    }
+                }
+            ]]></add>
+        </operation>
+
+        <operation error="log" info="Add the get Products from same manufacturer stuff to the controller">
+            <search position="after">
+                <![CDATA[$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);]]>
+            </search>
+            <add>
+                <![CDATA[
+                    if($this->config->get('manufacturer_extended_show_manufacturer_tab_product_page') && $this->config->get('manufacturer_extended_show_tab_products')) {
+                        $data['man_ext_products'] = array();
+
+
+                        $results = $this->model_catalog_product->getProductsFromSameManufacturer($product_info['manufacturer_id'], $this->config->get('manufacturer_extended_product_count'), $product_info['product_id']);
+
+                        foreach ($results as $result) {
+                            if ($result['image']) {
+                                $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                            } else {
+                                $image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_related_width'), $this->config->get('config_image_related_height'));
+                            }
+
+                            if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+                                $price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+                            } else {
+                                $price = false;
+                            }
+
+                            if ((float)$result['special']) {
+                                $special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+                            } else {
+                                $special = false;
+                            }
+
+                            if ($this->config->get('config_tax')) {
+                                $tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
+                            } else {
+                                $tax = false;
+                            }
+
+                            if ($this->config->get('config_review_status')) {
+                                $rating = (int)$result['rating'];
+                            } else {
+                                $rating = false;
+                            }
+
+                            $data['man_ext_products'][] = array(
+                                'product_id'  => $result['product_id'],
+                                'thumb'       => $image,
+                                'name'        => $result['name'],
+                                'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+                                'price'       => $price,
+                                'special'     => $special,
+                                'tax'         => $tax,
+                                'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
+                                'rating'      => $rating,
+                                'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+                            );
+                        }
+                    }
+
+                ]]>
+            </add>
+        </operation>
+    </file>
+
+    <file name="catalog/view/theme/*/template/product/product.tpl">
+        <operation error="log" info="Add Tab to product page tabs">
+            <search position="after" offset="1">
+                <![CDATA[<li><a href="#tab-review" data-toggle="tab"><?php echo $tab_review; ?></a></li>]]>
+            </search>
+            <add>
+                <![CDATA[
+				<?php if ($show_manufacturer_tab && isset($manufacturer)) { ?>
+					<li><a href="#tab-manufacturer" data-toggle="tab"><?php echo $tab_manufacturer; ?></a></li>
+				<?php } ?>
+                ]]>
+            </add>
+        </operation>
+
+        <operation error="log" info="Add Tab content">
+            <search position="after">
+                <![CDATA[<div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>]]>
+            </search>
+            <add><![CDATA[
+            	<?php if ($show_manufacturer_tab && $manufacturer) { ?>
+            	<div class="tab-pane" id="tab-manufacturer">
+            	    <h2><?php echo $manufacturer; ?></h2>
+            	    <?php if ($manufacturer_extended_image && $show_manufacturer_tab_image) { ?><img src="<?php echo $manufacturer_extended_image;?>" alt="<?php echo $manufacturer; ?>" class="pull-left img-rounded product-page-manufacturer-image"/><?php } ?>
+            	    <?php if ($manufacturer_extended_description && $show_manufacturer_tab_description) { ?><?php echo $manufacturer_extended_description; ?><?php } ?>
+
+            	    <!-- // Start manufacturer related products -->
+                            <?php if(isset($man_ext_products) && count($man_ext_products)) { ?>
+
+                                <h3><?php echo $text_more_from; ?> <?php echo $manufacturer; ?></h3>
+
+                                  <div class="row">
+                                    <?php $i = 0; ?>
+                                    <?php foreach ($man_ext_products as $product) { ?>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                      <div class="product-thumb transition">
+                                        <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
+                                        <div class="caption">
+                                          <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
+                                          <p><?php echo $product['description']; ?></p>
+                                          <?php if ($product['rating']) { ?>
+                                          <div class="rating">
+                                            <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                            <?php if ($product['rating'] < $i) { ?>
+                                            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                            <?php } else { ?>
+                                            <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+                                            <?php } ?>
+                                            <?php } ?>
+                                          </div>
+                                          <?php } ?>
+                                          <?php if ($product['price']) { ?>
+                                          <p class="price">
+                                            <?php if (!$product['special']) { ?>
+                                            <?php echo $product['price']; ?>
+                                            <?php } else { ?>
+                                            <span class="price-new"><?php echo $product['special']; ?></span> <span class="price-old"><?php echo $product['price']; ?></span>
+                                            <?php } ?>
+                                            <?php if ($product['tax']) { ?>
+                                            <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+                                            <?php } ?>
+                                          </p>
+                                          <?php } ?>
+                                        </div>
+                                        <div class="button-group">
+                                          <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
+                                          <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
+                                          <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <?php $i++; ?>
+                                    <?php } ?>
+                                  </div>
+                            <?php } ?>
+            	            <!-- END MAN.EXT. PRODUCTS -->
+
+            	</div>
+				<?php } ?>
+            ]]></add>
+        </operation>
+
+    </file>
+
+</modification>
