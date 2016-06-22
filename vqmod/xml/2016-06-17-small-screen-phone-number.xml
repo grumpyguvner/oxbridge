@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Small Screen Phone Number</id>
+	<version>1.0.0</version>
+	<vqmver>2.4.0</vqmver>
+	<author>Mark Horton</author>
+	
+	<file name="catalog/view/theme/theme532/template/common/header.tpl" error="skip">
+		<operation error="skip">
+			<search position="before"><![CDATA[<a class="swipe-control" href="#">]]></search>
+			<add><![CDATA[
+			<div class="toprow-right"><span style="font-size: larger">Call us on: <a style="font-size: larger;color:#ff4f02; font-weight:bold;" href="tel:03332224010" onclick="ga('send', 'event', 'Phone Call', 'Click', 'Header');">0333 222 4010</a></span></div>
+			]]></add>
+		</operation>
+	</file>
+	
+</modification>
