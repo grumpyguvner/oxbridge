@@ -66,6 +66,30 @@
     <script>
         dataLayer = [];
     </script>
+<script type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type" : "LocalBusiness",
+	"@id" : "https://oxbridgehomelearning.uk/",
+	"name" : "Oxbridge Home Learning",
+	"logo" : "https://oxbridgehomelearning.uk/image/catalog/main-logos/oxbridge-home-learning-logo.png",
+	"telephone" : "+44 333 222 4010",
+        "url" : "https://oxbridgehomelearning.uk/",
+	"sameAs" : [ "https://www.facebook.com/oxbridgehome", "https://www.twitter.com/oxbridgehome", "https://plus.google.com/+OxbridgehomelearningUk","https://www.linkedin.com/company/oxbridge-home-learning" ],
+	"address" : {
+		"@type" : "PostalAddress",
+		"streetAddress" : "Faraday Wharf, Birmingham Science Park",
+		"addressRegion": "Birmingham",
+		"addressCountry" : "United Kingdom",
+		"postalCode" : "B7 4BB"
+	},
+	"geo": {
+		"@type": "GeoCoordinates",
+		"latitude": "52.488916",
+		"longitude": "-1.88744"
+	}
+}
+</script>
 </head>
 <body class="<?php echo $class; ?>">
 
