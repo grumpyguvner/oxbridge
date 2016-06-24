@@ -66,6 +66,7 @@
     <script>
         dataLayer = [];
     </script>
+<?php if (!isset($_GET['route']) && !isset($_GET['_route_'])) { ?>
 <script type="application/ld+json">
 {
 	"@context": "http://schema.org",
@@ -90,6 +91,7 @@
 	}
 }
 </script>
+<?php } ?>
 </head>
 <body class="<?php echo $class; ?>">
 
