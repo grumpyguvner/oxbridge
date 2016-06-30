@@ -30,6 +30,7 @@ $_['text_edit']         = 'Edit Top Header Link';
 // Column
 $_['column_group']      = 'Top Header Link Group';
 $_['column_sort_order'] = 'Sort Order';
+$_['column_store']      = 'Store';
 $_['column_action']     = 'Action';
 
 // Entry
@@ -38,6 +39,7 @@ $_['entry_name']        = 'Link Name';
 $_['entry_link']        = 'Link URL';
 $_['entry_columns']     = 'Columns';
 $_['entry_sort_order']  = 'Sort Order';
+$_['entry_store']       = 'Stores';
 
 // Buttons
 

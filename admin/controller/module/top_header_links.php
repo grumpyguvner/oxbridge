@@ -35,6 +35,14 @@ class ControllerModuleTopHeaderLinks extends Controller {
 		  `link` VARCHAR( 255 ) NOT NULL,
 		  PRIMARY KEY (`header_id`,`language_id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
+        
+        
+        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "header_group_to_store` (
+          `header_group_id` int(11) NOT NULL,
+          `store_id` int(11) NOT NULL,
+          PRIMARY KEY (`header_group_id`,`store_id`)
+        ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;");
+        
 
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "header_group` (
 		  `header_group_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -55,9 +63,11 @@ class ControllerModuleTopHeaderLinks extends Controller {
 	public function uninstall() {
 		
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "header`");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "header_group_to_store`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "header_description`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "header_group`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "header_group_description`");
+        
     }
 	
 	
@@ -213,12 +223,16 @@ class ControllerModuleTopHeaderLinks extends Controller {
 		$results = $this->model_module_top_header_links->getHeaderGroups($header_data);
         
        
+           
 
 		foreach ($results as $result) {
+            
+                
 			$data['headers'][] = array(
 				'header_group_id' => $result['header_group_id'],
 				'name'            => $result['name'],
 				'columns'         => $result['columns'],
+                'stores'          => implode(', ',$this->model_module_top_header_links->getHeaderGroupStoresNames($result['header_group_id'])),
                 'sort_order'      => $result['sort_order'],
 				'edit'            => $this->url->link('module/top_header_links/edit', 'token=' . $this->session->data['token'] . '&header_group_id=' . $result['header_group_id'] . $url, 'SSL')
 			);
@@ -232,7 +246,9 @@ class ControllerModuleTopHeaderLinks extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_group'] = $this->language->get('column_group');
-		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_store'] = $this->language->get('column_store');
+        $data['column_sort_order'] = $this->language->get('column_sort_order');
+        
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
@@ -308,10 +324,12 @@ class ControllerModuleTopHeaderLinks extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title_m');
 		$data['advert'] = $this->language->get('advert');
 		$data['text_form'] = !isset($this->request->get['header_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+        $data['text_default'] = $this->language->get('text_default');
 
 		$data['entry_group'] = $this->language->get('entry_group');
 		$data['entry_name'] = $this->language->get('entry_name');
         $data['entry_link'] = $this->language->get('entry_link');
+        $data['entry_store'] = $this->language->get('entry_store');
         $data['entry_columns'] = $this->language->get('entry_columns');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -388,6 +406,18 @@ class ControllerModuleTopHeaderLinks extends Controller {
 		$data['languages'] = $this->model_localisation_language->getLanguages();
 
         
+        $this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+        
+        
+        if (isset($this->request->post['link_store'])) {
+			$data['link_store'] = $this->request->post['link_store'];
+		} elseif (isset($this->request->get['header_group_id'])) {
+			$data['link_store'] = $this->model_module_top_header_links->getLinkStores($this->request->get['header_group_id']);
+		} else {
+			$data['link_store'] = array(0);
+		}
         
        
         

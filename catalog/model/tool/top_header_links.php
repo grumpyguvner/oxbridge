@@ -2,7 +2,7 @@
 #################################################################
 ## Open Cart Module:  ULTIMATE TOP HEADER MENU LINKS MANAGER   ##
 ##-------------------------------------------------------------##
-## Copyright © 2014 MB "Programanija" All rights reserved.     ##
+## Copyright © 2015 MB "Programanija" All rights reserved.     ##
 ## http://www.opencartextensions.eu						       ##
 ## http://www.extensionsmarket.com 						       ##
 ##-------------------------------------------------------------##
@@ -18,15 +18,15 @@ class ModelToolTopHeaderLinks extends Model {
     
     
 
-	
 	public function getHeadermenu(){
       
+     
         $links = array();
         
         $main_links = $this->db->query("SELECT * FROM " . DB_PREFIX . "header_group fg 
-        LEFT JOIN " . DB_PREFIX . "header_group_description fgd ON fg.header_group_id = fgd.header_group_id 
-        WHERE fgd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY fg.sort_order ASC
-        ");
+        LEFT JOIN " . DB_PREFIX . "header_group_description fgd ON fg.header_group_id = fgd.header_group_id
+        LEFT JOIN " . DB_PREFIX . "header_group_to_store hg2s ON fg.header_group_id = hg2s.header_group_id 
+        WHERE fgd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND hg2s.store_id='".(int)$this->config->get('config_store_id')."' ORDER BY fg.sort_order ASC");
 
 		
         foreach($main_links->rows as $main_link){
