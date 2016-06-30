@@ -65,6 +65,9 @@
                         <li><a href="#tab_columns" role="tab" data-toggle="tab"><i class="fa fa-columns"></i>&nbsp;Columns</a></li>
                         <li><a href="#social_buttons" role="tab" data-toggle="tab"><i class="fa fa-comment"></i>&nbsp;Social buttons</a></li>
                         <li><a href="#payment_icons" role="tab" data-toggle="tab"><i class="fa fa-usd"></i>&nbsp;Payment icons</a></li>
+                        <?php if(count($stores) > 1){ ?>
+                         <li><a href="#duplicate_settings" role="tab" data-toggle="tab"><i class="fa fa-clone"></i>&nbsp;Duplicate Settings</a></li>
+                         <?php } ?>
                         <li><a href="#isense_support" role="tab" data-toggle="tab"><i class="fa fa-ticket"></i>&nbsp;Support</a></li>
                     </ul>
             
@@ -75,10 +78,10 @@
                             </div>
                             
                             <div class="tab-pane" id="tab_columns">
-                                <ul class="nav nav-tabs mainMenuTabs" role="tablist" id="mainTabs">
+                                <ul class="nav nav-tabs mainMenuTabs columnSettings" role="tablist" id="mainTabs">
                                     <?php $index_1 = 0; foreach($languages as $lang) : ?>
-                                        <li<?php echo $index_1 == 0 ? ' class="active"' : ''; ?>>
-                                            <a href="#sub_tab_<?php echo $index_1; ?>" role="tab" data-toggle="tab"><img src="view/image/flags/<?php echo $lang['image']; ?>" title="<?php echo $lang['name']; ?>" /></a>
+                                        <li<?php echo $index_1 == 0 ? ' class="active"' : ''; ?> data-langcode="<?php echo $lang['code']; ?>">
+                                            <a href="#sub_tab_<?php echo $index_1; ?>" role="tab" data-toggle="tab"><img src="<?php echo $lang['flag_url']; ?>" title="<?php echo $lang['name']; ?>" /></a>
                                         </li>
                                     <?php $index_1++; endforeach; ?>
                                 </ul>
@@ -86,7 +89,7 @@
                                 
                                 <div class="tab-content">
                                 	<?php $index_1 = 0; $index_3=0; foreach($languages as $lang) : ?>
-                                    	<div class="tab-pane<?php echo $index_1 == 0 ? ' active' : ''; ?>" id="sub_tab_<?php echo $index_1; ?>">
+                                    	<div  class="tab-pane<?php echo $index_1 == 0 ? ' active' : ''; ?>" id="sub_tab_<?php echo $index_1; ?>">
                                         	<?php include(DIR_APPLICATION . 'view/template/module/icustomfooter/tablanguage_columns.php'); ?>
                                    		</div>
                                 	<?php $index_1++; endforeach; ?>
@@ -104,6 +107,12 @@
                             <div class="tab-pane" id="isense_support">
                                 <?php require_once(DIR_APPLICATION.'view/template/module/icustomfooter/tab_support.php'); ?>
                             </div>
+
+                            <?php if(count($stores) > 1){ ?>
+                             <div class="tab-pane" id="duplicate_settings">
+                                <?php require_once(DIR_APPLICATION.'view/template/module/icustomfooter/tab_dublicate.php'); ?>
+                            </div>
+                            <?php } ?>
                     </div>
             	</form>
                 <form style="display: none;" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form_payment_icons">

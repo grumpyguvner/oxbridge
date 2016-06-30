@@ -6,56 +6,73 @@ Array.prototype.indexOf = function(obj, start) {
 }
 
 var includedMapsAPIs = [];
-var initialize_map = function(previewDiv, longitude, latitude) {
-	var myLatlng = new google.maps.LatLng(longitude, latitude);
+function initialize_map (previewDiv, points) {
+	
+	var centerP = new google.maps.LatLng(points[0]['longitude'], points[0]['latitude']);
 	
 	var mapOptions = {
-		center: myLatlng,
+		center: centerP,
 		zoom: 12,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	
-	var map = new google.maps.Map(previewDiv, mapOptions);
-	
-	var marker = new google.maps.Marker({
-		position: myLatlng,
-		map: map,
-		title: ""
-	});
+	var map = new google.maps.Map(document.getElementById(previewDiv), mapOptions);
+
+	var marker, i;
+	for (i = 0; i < points.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(points[i]['longitude'], points[i]['latitude']),
+        map: map
+      });
+
+
+      (function(marker, i) {
+	        // add click event
+	        google.maps.event.addListener(marker, 'click', function() {
+	            infowindow = new google.maps.InfoWindow({
+	                content: points[i]['name']
+	            });
+	            infowindow.open(map, marker);
+	        });
+	    })(marker, i);
+
+  	}
 }
 
-var displayMaps = function() {
-	$('.GoogleMapsPreviewDiv').each(function(index, previewDiv) {
-		var apikey = $($(previewDiv).attr('data-apikey-selector')).val();
-		var longitude = parseFloat($($(previewDiv).attr('data-longitude-selector')).val().replace(/,/g, '.'));
-		var latitude = parseFloat($($(previewDiv).attr('data-latitude-selector')).val().replace(/,/g, '.'));
-		
+function displayMaps (languange_id){
+	var apikey = $('#GoogleMapsAPIKey_'+languange_id).val();
+	var previewDiv =  'GoogleMapsPreviewDiv_'+languange_id;
+	var points = [];
+	$('#GoogleMapsPoints_'+languange_id+' .row').each(function(index) {
+		points[index] = {name:$(this).find('.GoogleMapsName_'+languange_id).val(),longitude:$(this).find('.GoogleMapsLongitude_'+languange_id).val(), latitude:$(this).find('.GoogleMapsLatitude_'+languange_id).val() };
+	});
 		if (apikey == '') return;
-		
 		if (includedMapsAPIs.indexOf(apikey) == -1) {
 			includedMapsAPIs.push(apikey);
 			var script = document.createElement("script");
 			script.type = "text/javascript";
-			script.src = 'https://maps.googleapis.com/maps/api/js?key=' + apikey + '&sensor=false&callback=displayMaps';
+			script.src = 'https://maps.googleapis.com/maps/api/js?key=' + apikey;
 			document.body.appendChild(script);
+			setTimeout(function(){ displayMaps(languange_id); }, 1000);
 		} else {
-			if (document.readyState === "complete") initialize_map(previewDiv, longitude, latitude);
-			else $(window).load(function() { initialize_map(previewDiv, longitude, latitude); });
+			if (document.readyState === "complete") initialize_map(previewDiv, points);
+			else $(window).load(function() { initialize_map(previewDiv, points); });
 		}
-	});
+		
+		
+
 }
 
 
 $(document).ready(function() {
 	$('.dropdown-toggle').dropdown();
 	
-	displayMaps();
-	
-	$('.GoogleMapsPreviewButton').click(function(e) {
+	//displayMaps();
+
+	$('.GoogleMapsPreviewButton').on('click', function(e) {
 		e.preventDefault();
-		displayMaps();
-		return false;
 	});
+
 	
 	$('.paymentIconsBrowse').click(function(e) {
 		$($(this).attr('data-click-selector')).attr('data-browse-text-selector', $(this).attr('data-browse-text-selector'));

@@ -10,7 +10,8 @@
             	<li class="list-group-item">
                 	<a data-target="#column_<?php echo $index_1; ?>_<?php echo ($index_3 + $i); ?>"><?php echo $customcolumn . ' ' . $i; ?><i class="fa fa-chevron-right"></i></a>
             	</li>
-            <?php endfor; ?>
+            <?php endfor; //TODO add to lang file ?>
+            <li class="list-group-item"><a data-target="#column_<?php echo $index_1; ?>_duplicate"><i class="fa fa-chevron-right"></i><?php echo $duplicatecolumn; ?></a></li>
         </ul>
     </div>
     <div class="col-xs-10">
@@ -36,6 +37,17 @@
                     </div>
                 </div>
             <?php endfor; ?>
+
+
+            <div class="tab-pane" id="column_<?php echo $index_1; ?>_duplicate">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><?php echo $duplicatecolumn; ?></div>
+                        <div class="panel-body iModuleFields">
+                            <?php include($dirName . 'columndublicate_language.php'); ?>
+                        </div>
+                    </div>
+            </div>
+
         </div>
     </div>
 </div>

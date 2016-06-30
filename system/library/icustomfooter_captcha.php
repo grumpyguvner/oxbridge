@@ -1,5 +1,5 @@
 <?php
-class Captcha {
+class icustomfooter_captcha {
 	protected $code;
 	protected $width = 90;
 	protected $height = 40;

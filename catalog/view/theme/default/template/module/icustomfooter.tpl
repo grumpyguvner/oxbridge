@@ -1,5 +1,8 @@
 <?php if (!empty($icustomfooter)) { echo $icustomfooter; ?>
+  <?php if(isset($withoutfooter)) { ?>
 
+
+    <?php } else { ?>
     <div id="icustomfooter-informational" class="icustomfooter-wrapper <?php echo $idata['Settings']['BackgroundPattern']; ?>">
         <div id="icustomfooter_default_footer">
             <div class="icustomfooter_default_footer_wrapper">
@@ -75,14 +78,6 @@
                                     <?php endif; ?>
                                     <?php if ($idata['Settings']['SocialButtons']['FacebookLike']['Show'] == 'true'): ?>
                                         <li class="iFacebook iButton">
-                                            <div id="fb-root"></div>
-                                            <script>(function(d, s, id) {
-                                              var js, fjs = d.getElementsByTagName(s)[0];
-                                              if (d.getElementById(id)) return;
-                                              js = d.createElement(s); js.id = id;
-                                              js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=159650554163037";
-                                              fjs.parentNode.insertBefore(js, fjs);
-                                            }(document, 'script', 'facebook-jssdk'));</script>
                                             <fb:like send="false" layout="button_count" width="200" show_faces="false"></fb:like>
                                         </li>
                                     <?php endif; ?>
@@ -143,7 +138,18 @@
     </div>
         
 <?php } ?>
-    
+<?php } ?>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.6";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 </div>
 </body>
 </html>

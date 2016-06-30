@@ -1,9 +1,9 @@
 <?php  
 class ControllerModuleIcustomfooter extends Controller {
 	public function index() {
-		$this->load->model('setting/setting');
+		$this->load->model('module/icustomfooter');
 		
-		$data = $this->model_setting_setting->getSetting('icustomfooter', $this->config->get('config_store_id'));
+		$data = $this->model_module_icustomfooter->getSetting('icustomfooter', $this->config->get('config_store_id'));
 		
 		if (!empty($data['icustomfooter'])) {
 			$data = $data['icustomfooter'];		
@@ -46,12 +46,18 @@ class ControllerModuleIcustomfooter extends Controller {
 					$data['columns'][] = $column;
 				}
 			}
-			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/icustomfooter.tpl')) {
-				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/icustomfooter.tpl', $data);
+
+			if(version_compare(VERSION, '2.2.0.0', "<")) {
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/icustomfooter.tpl')) {
+					return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/icustomfooter.tpl', $data);
+				} else {
+					return $this->load->view('default/template/module/icustomfooter/icustomfooter.tpl', $data);
+				}
 			} else {
-				return $this->load->view('default/template/module/icustomfooter/icustomfooter.tpl', $data);
-			}
+			       return $this->load->view('module/icustomfooter/icustomfooter', $data);
+			 }
+			
+
 		}
 	}
 	
@@ -59,88 +65,122 @@ class ControllerModuleIcustomfooter extends Controller {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
+
+
 	}
 	
 	public function column_custom1($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_custom2($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_custom3($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_custom4($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_custom5($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_contacts($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_googlemaps($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_contactform($setting) {
@@ -164,70 +204,102 @@ class ControllerModuleIcustomfooter extends Controller {
 			if (empty($this->request->post['iContactForm']['Message']) || empty($this->request->post['iContactForm']['Name']) || empty($this->request->post['iContactForm']['Email'])) $pass = false;
 			
 			if ($pass) {
-				$mail = new Mail($this->config->get('config_mail'));			
+				
+				if (VERSION < '2.0.2.0') {
+					$mail = new Mail($this->config->get('config_mail'));
+				} else {
+					$mail = new Mail();
+					$mail->protocol = $this->config->get('config_mail_protocol');
+					$mail->parameter = $this->config->get('config_mail_parameter');
+					$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+				}
+				
 				$mail->setTo($config['Email']);
 				$mail->setFrom(substr($this->request->post['iContactForm']['Email'], 0, 255));
 				$mail->setSender(substr($this->request->post['iContactForm']['Name'], 0, 255));
 				$mail->setSubject($config['EmailSubject']);
 				$mail->setText(strip_tags(substr($this->request->post['iContactForm']['Message'], 0, $val)));
 				$mail->send();
-				
-				$data['flash'] = '<div class="flashmessage">'.$config['LabelSuccess'].'</div>';							
+					
+				$data['flash'] = '<div class="flashmessage">'.$config['LabelSuccess'].'</div>';
 			}
 		}
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_twitter($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_facebook($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function column_youtube($setting) {
 		$data['idata'] = $setting['idata'];
 		$data['langcode'] = $setting['langcode'];
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
-			return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+		if(version_compare(VERSION, '2.2.0.0', "<")) {
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/icustomfooter/' . __FUNCTION__ . '.tpl')) {
+				return $this->load->view($this->config->get('config_template').'/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
+			}
 		} else {
-			return $this->load->view('default/template/module/icustomfooter/' . __FUNCTION__ . '.tpl', $data);
-		}
+		       return $this->load->view('module/icustomfooter/' . __FUNCTION__, $data);
+		 }
 	}
 	
 	public function captcha() {
-		$this->load->model('setting/setting');
-		$this->load->library('icustomfooter_captcha');
+		$this->load->model('module/icustomfooter');
 		
-		$captcha = new Captcha();
+		if(VERSION < '2.1.0.0') {
+			$this->load->library('icustomfooter_captcha');
+		}
+		
+		$captcha = new icustomfooter_captcha();
 		
 		$this->session->data['icustomfooter_captcha'] = $captcha->getCode();
 		
-		$data = $this->model_setting_setting->getSetting('icustomfooter', $this->config->get('config_store_id'));
+		$data = $this->model_module_icustomfooter->getSetting('icustomfooter', $this->config->get('config_store_id'));
 		
 		if (!empty($data['icustomfooter'])) {
-			$data = $data['icustomfooter'];		
+			$data = $data['icustomfooter'];
 		}
 		
 		if ($data['Settings']['BackgroundPattern'] == 'flatfooterlayout') {

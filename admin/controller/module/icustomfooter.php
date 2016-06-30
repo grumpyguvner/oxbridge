@@ -2,11 +2,49 @@
 class ControllerModuleICustomFooter extends Controller {
 	private $moduleName = 'icustomfooter';
 	private $error = array();
+	private $version = '3.3.2';
 	
+	public function duplicateSettings(){
+		$this->load->model('module/icustomfooter');
+
+		if (!$this->user->hasPermission('modify', 'module/icustomfooter')) {
+				$this->session->data['error'] = $this->language->get('error_permission');
+				$this->response->redirect($this->url->link('module/icustomfooter', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$toStoreID = $this->request->get['to'];
+			$fromStoreID = $this->request->get['from'];
+			$data['module_data_from_store'] = $this->model_module_icustomfooter->getSetting('icustomfooter', $fromStoreID);
+			$this->model_module_icustomfooter->editSetting('icustomfooter', $data['module_data_from_store'], $toStoreID);
+			$this->session->data['success'] = 'You have successfully dublicated store settings!';
+			$this->response->redirect($this->url->link('module/icustomfooter', 'store_id='.$toStoreID.'&token=' . $this->session->data['token'], 'SSL'));
+		}
+	}
+
+	public function duplicateLangSettings(){
+		$this->load->model('module/icustomfooter');
+
+		if(!isset($this->request->get['store_id'])) {
+           $this->request->get['store_id'] = 0; 
+        }
+
+
+		if (!$this->user->hasPermission('modify', 'module/icustomfooter')) {
+				$this->session->data['error'] = $this->language->get('error_permission');
+				$this->response->redirect($this->url->link('module/icustomfooter', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$toLangID = $this->request->get['to'];
+			$fromLangID = $this->request->get['from'];
+			$data['module_data'] = $this->model_module_icustomfooter->getSetting('icustomfooter', $this->request->get['store_id']);
+			$data['module_data']['icustomfooter'][$fromLangID] = $data['module_data']['icustomfooter'][$toLangID];
+			$this->model_module_icustomfooter->editSetting('icustomfooter', $data['module_data'], $this->request->get['store_id']);
+			$this->session->data['success'] = 'You have successfully dublicated column settings!';
+			$this->response->redirect($this->url->link('module/icustomfooter', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
+		}
+	}
+
 	public function index() {
 		$data['moduleName'] = $this->moduleName;
 		
-		$this->load->model('setting/setting');
 		$this->load->model('localisation/language');
 		$this->load->model('setting/store');
 		$this->load->model('module/icustomfooter');
@@ -38,7 +76,7 @@ class ControllerModuleICustomFooter extends Controller {
 				} else {
 					if (!empty($this->request->post)) {
 						$data = $this->request->post;
-						$this->model_setting_setting->editSetting('icustomfooter', $data, $this->request->post['store_id']);
+						$this->model_module_icustomfooter->editSetting('icustomfooter', $data, $this->request->post['store_id']);
 						$this->session->data['success'] = $this->language->get('text_success');
 						$this->response->redirect($this->url->link('module/icustomfooter', 'store_id='.$this->request->post['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
 					}
@@ -50,7 +88,7 @@ class ControllerModuleICustomFooter extends Controller {
 		$this->document->addStyle('view/stylesheet/icustomfooter.css');
 		$this->document->addScript('view/javascript/icustomfooter.js');
 		
-		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title').' '.$this->version;
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_content_top'] = $this->language->get('text_content_top');
@@ -87,7 +125,7 @@ class ControllerModuleICustomFooter extends Controller {
 		}
 		
 		$data['extraColumnAttributes'] = array(
-			'googlemaps' => ' onclick="$(\'.GoogleMapsPreviewButton\').click();"'
+			//'googlemaps' => ' onclick="$(\'.GoogleMapsPreviewButton\').click();"'
 		);
 		
 		foreach (array_merge($data['columns'], $data['settings_columns']) as $column) {
@@ -102,6 +140,7 @@ class ControllerModuleICustomFooter extends Controller {
 		
 		$data['customColumnCount'] = 5;
 		$data['customcolumn'] = $this->language->get('customcolumn');
+		$data['duplicatecolumn'] = $this->language->get('duplicatecolumn');
 		$data['footercustomization'] = $this->language->get('footercustomization');
 		$data['assistance'] = $this->language->get('assistance');
 		$data['globalsettings'] = $this->language->get('globalsettings');
@@ -151,7 +190,12 @@ class ControllerModuleICustomFooter extends Controller {
 		$data['twitter_profile'] = $this->language->get('twitter_profile');
 		$data['twitter_keyword_mentioned_in_twitter'] = $this->language->get('twitter_keyword_mentioned_in_twitter');
 		$data['facebook_pageurl'] = $this->language->get('facebook_pageurl');
+		$data['facebook_pagetitle'] = $this->language->get('facebook_pagetitle');
 		$data['facebook_widgetheight'] = $this->language->get('facebook_widgetheight');
+		$data['facebook_usesmallheader'] = $this->language->get('facebook_usesmallheader');
+		$data['facebook_hidecoverphoto'] = $this->language->get('facebook_hidecoverphoto');
+		$data['facebook_showfriendsfaces'] = $this->language->get('facebook_showfriendsfaces');
+		$data['facebook_showpageposts'] = $this->language->get('facebook_showpageposts');
 		$data['youtube_url'] = $this->language->get('youtube_url');
 		$data['youtube_width'] = $this->language->get('youtube_width');
 		$data['youtube_height'] = $this->language->get('youtube_height');
@@ -163,6 +207,13 @@ class ControllerModuleICustomFooter extends Controller {
 		$data['contactform_messageboxlabel'] = $this->language->get('contactform_messageboxlabel');
 		$data['contactform_captchaboxlabel'] = $this->language->get('contactform_captchaboxlabel');
 		$data['contactform_sendbuttonlabel'] = $this->language->get('contactform_sendbuttonlabel');
+
+		$data['duplicate_column_label'] = $this->language->get('duplicate_column_label');
+		$data['duplicate_column_help'] = $this->language->get('duplicate_column_help');
+		$data['duplicate_settings_label'] = $this->language->get('duplicate_settings_label');
+		$data['duplicate_settings_help'] = $this->language->get('duplicate_settings_help');
+		$data['duplicate_button'] = $this->language->get('duplicate_button');
+
 		$data['contactform_successfulsentmessage'] = $this->language->get('contactform_successfulsentmessage');
 		$data['contactform_requiredfieldmessage'] = $this->language->get('contactform_requiredfieldmessage');
 		$data['contactform_notvalidmessage'] = $this->language->get('contactform_notvalidmessage');
@@ -189,6 +240,7 @@ class ControllerModuleICustomFooter extends Controller {
 		$data['footerusewithdefaultocwithicons'] = $this->language->get('footerusewithdefaultocwithicons');
 		$data['footerusewiththemefooter'] = $this->language->get('footerusewiththemefooter');
 		$data['footerusewithicons'] = $this->language->get('footerusewithicons');
+		$data['footerusewithnone'] = $this->language->get('footerusewithnone');
 		$data['hidepoweredby'] = $this->language->get('hidepoweredby');
 		$data['footerfontfamily'] = $this->language->get('footerfontfamily');
 		$data['footerbackgroundstyle'] = $this->language->get('footerbackgroundstyle');
@@ -207,7 +259,7 @@ class ControllerModuleICustomFooter extends Controller {
 		$data['customcss'] = $this->language->get('customcss');
 		$data['text_default'] = $this->language->get('text_default');
 		
-		$data['module_data'] = $this->model_setting_setting->getSetting('icustomfooter', $this->request->get['store_id']);
+		$data['module_data'] = $this->model_module_icustomfooter->getSetting('icustomfooter', $this->request->get['store_id']);
 		$data['module_data'] = !isset($data['module_data']['icustomfooter']) ? $this->model_module_icustomfooter->getDefaultSettings() : $data['module_data']['icustomfooter'];
 		
 		// Images
@@ -229,9 +281,9 @@ class ControllerModuleICustomFooter extends Controller {
 					'file' => PAYMENTICONS_FOLDER . $value,
 					'name' => $name,
 					'origname' => $value,
-					'delete' => $this->url->link('module/icustomfooter/image_delete', 'token=' . $this->session->data['token'] . '&image=' . $key, 'SSL'),
-					'moveup' => $this->url->link('module/icustomfooter/image_moveup', 'token=' . $this->session->data['token'] . '&moveup=' . $key, 'SSL'),
-					'movedown' => $this->url->link('module/icustomfooter/image_movedown', 'token=' . $this->session->data['token'] . '&movedown=' . $key, 'SSL')
+					'delete' => $this->url->link('module/icustomfooter/image_delete', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'] . '&image=' . $key, 'SSL'),
+					'moveup' => $this->url->link('module/icustomfooter/image_moveup', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'] . '&moveup=' . $key, 'SSL'),
+					'movedown' => $this->url->link('module/icustomfooter/image_movedown', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'] . '&movedown=' . $key, 'SSL')
 				));
 			}
 		}
@@ -276,14 +328,25 @@ class ControllerModuleICustomFooter extends Controller {
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['languages'] = $this->model_module_icustomfooter->getSystemLanguages();
+
+		foreach ($data['languages'] as $key => $value) {
+			$data['languages'][$key]['flag_url'] = version_compare(VERSION, '2.2.0.0', "<") 
+			? 'view/image/flags/'.$data['languages'][$key]['image']
+			: 'language/'.$data['languages'][$key]['code'].'/'.$data['languages'][$key]['code'].'.png"';
+		}
+
 		
 		$this->response->setOutput($this->load->view('module/icustomfooter.tpl', $data));
-	}
+	}	
 	
 	public function image_moveup() {
 		$this->language->load('module/icustomfooter');
 		$this->load->model('module/icustomfooter');
 		
+		if(!isset($this->request->get['store_id'])) {
+           $this->request->get['store_id'] = 0; 
+        }
+
 		if (!$this->user->hasPermission('modify', 'module/icustomfooter')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
@@ -303,13 +366,17 @@ class ControllerModuleICustomFooter extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 		
-		$this->response->redirect($this->url->link('module/icustomfooter', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('module/icustomfooter', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
 	}
 	
 	public function image_movedown() {
 		$this->language->load('module/icustomfooter');
 		$this->load->model('module/icustomfooter');
 		
+		if(!isset($this->request->get['store_id'])) {
+           $this->request->get['store_id'] = 0; 
+        }
+
 		if (!$this->user->hasPermission('modify', 'module/icustomfooter')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
@@ -329,13 +396,17 @@ class ControllerModuleICustomFooter extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 		
-		$this->response->redirect($this->url->link('module/icustomfooter', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('module/icustomfooter', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
 	}
 	
 	public function image_delete() {
 		$this->language->load('module/icustomfooter');
 		$this->load->model('module/icustomfooter');
 		
+		if(!isset($this->request->get['store_id'])) {
+           $this->request->get['store_id'] = 0; 
+        }
+
 		if (!$this->user->hasPermission('modify', 'module/icustomfooter')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 		} else {
@@ -347,7 +418,7 @@ class ControllerModuleICustomFooter extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 		
-		$this->response->redirect($this->url->link('module/icustomfooter', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('module/icustomfooter', 'store_id='.$this->request->get['store_id'].'&token=' . $this->session->data['token'], 'SSL'));
 	}
 	
 	private function getCatalogURL() {
@@ -392,11 +463,11 @@ class ControllerModuleICustomFooter extends Controller {
 			$this->load->model('localisation/language');
 			$this->load->model('design/layout');
 			
-			$this->model_setting_setting->deleteSetting($this->moduleName,0);
+			$this->model_module_icustomfooter->deleteSetting($this->moduleName,0);
 			$stores=$this->model_setting_store->getStores();
 			
 			foreach ($stores as $store) {
-				$this->model_setting_setting->deleteSetting('icustomfooter', $store['store_id']);
+				$this->model_module_icustomfooter->deleteSetting('icustomfooter', $store['store_id']);
 			}
 			$this->model_module_icustomfooter->uninstall();
 		}

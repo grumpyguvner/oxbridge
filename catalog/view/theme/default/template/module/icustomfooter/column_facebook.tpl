@@ -3,7 +3,7 @@
 	<div class="iWidgetWrapper">
 		<h2><?php echo $idata[$langcode]['Widgets']['Facebook']['Title']?></h2>
         <div class="belowTitleContainer">
-		<iframe src="//www.facebook.com/plugins/likebox.php?href=<?php echo htmlentities($idata[$langcode]['Widgets']['Facebook']['URL'])?>&amp;width=250&amp;height=<?php echo $idata[$langcode]['Widgets']['Facebook']['Height']?>&amp;colorscheme=<?php echo(!empty($idata['Settings']['BackgroundPattern']) && $idata['Settings']['BackgroundPattern'] == 'darkbgpattern' ? 'dark' : 'light');?>&amp;show_faces=true&amp;border_color=%23ddd&amp;stream=false&amp;header=false&amp;appId=159650554163037" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:<?php echo $idata[$langcode]['Widgets']['Facebook']['Height']?>px;" allowTransparency="true"></iframe>
+            <div class="fb-page" data-href="<?php echo $idata[$langcode]['Widgets']['Facebook']['URL']; ?>" data-height="<?php echo $idata[$langcode]['Widgets']['Facebook']['Height']; ?>" data-small-header="<?php echo $idata[$langcode]['Widgets']['Facebook']['UseSmallHeader']; ?>" data-adapt-container-width="true" data-hide-cover="<?php echo $idata[$langcode]['Widgets']['Facebook']['HideCoverPhoto']; ?>" data-show-facepile="<?php echo $idata[$langcode]['Widgets']['Facebook']['ShowFriendsFaces']; ?>" data-show-posts="<?php echo $idata[$langcode]['Widgets']['Facebook']['ShowPagePosts']; ?>"><div class="fb-xfbml-parse-ignore"><blockquote cite="<?php echo $idata[$langcode]['Widgets']['Facebook']['URL']; ?>"><a href="<?php echo $idata[$langcode]['Widgets']['Facebook']['URL']; ?>"><?php echo $idata[$langcode]['Widgets']['Facebook']['PageTitle']; ?></a></blockquote></div></div>
         </div>
 	</div>
 </li>

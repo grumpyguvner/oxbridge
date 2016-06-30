@@ -47,16 +47,35 @@
         	<label for="GoogleMapsLongitude_<?php echo $lang['code']; ?>"><?php echo $maps_longlat; ?></label>
         </td>
         <td>
-        	<div class="col-xs-4">
-            	<div class="row">
-                	<div class="col-xs-6">
-                    	<input type="text" class="GoogleMapsLongitude semiField form-control" name="<?php echo $moduleName; ?>[<?php echo $lang['code']; ?>][Widgets][GoogleMaps][Longitude]" value="<?php echo $module_data[$lang['code']]['Widgets']['GoogleMaps']['Longitude']; ?>" id="GoogleMapsLongitude_<?php echo $lang['code']; ?>" />
-                    </div>
-                    <div class="col-xs-6">
-                    	<input type="text" class="GoogleMapsLatitude semiField form-control" name="<?php echo $moduleName; ?>[<?php echo $lang['code']; ?>][Widgets][GoogleMaps][Latitude]" value="<?php echo $module_data[$lang['code']]['Widgets']['GoogleMaps']['Latitude']; ?>" id="GoogleMapsLatitude_<?php echo $lang['code']; ?>" />
-             		</div>
+        	<div class="col-xs-8">
+            	<div id="GoogleMapsPoints_<?php echo $lang['code']; ?>">
+                <?php if(isset($module_data[$lang['code']]['Widgets']['GoogleMaps']['Points'])) { ?>
+                    <?php foreach ($module_data[$lang['code']]['Widgets']['GoogleMaps']['Points'] as $key => $point) { ?>
+                        <div style="margin-top:5px;" class="row" data-id=<?php echo $key; ?>>
+                            <div class="col-xs-3">
+                                <input type="text" class="GoogleMapsName_<?php echo $lang['code']; ?> semiField form-control" name="<?php echo $moduleName; ?>[<?php echo $lang['code']; ?>][Widgets][GoogleMaps][Points][<?php echo $key; ?>][Name]" placeholder="Enter Point Name" value="<?php echo $point['Name']; ?>" />
+                            </div>
+                        	<div class="col-xs-3">
+                            	<input type="text" class="GoogleMapsLongitude_<?php echo $lang['code']; ?> semiField form-control" name="<?php echo $moduleName; ?>[<?php echo $lang['code']; ?>][Widgets][GoogleMaps][Points][<?php echo $key; ?>][Longitude]" placeholder="Enter Point Longitude" value="<?php echo $point['Longitude']; ?>" />
+                            </div>
+                            <div class="col-xs-3">
+                            	<input type="text" class="GoogleMapsLatitude_<?php echo $lang['code']; ?> semiField form-control" name="<?php echo $moduleName; ?>[<?php echo $lang['code']; ?>][Widgets][GoogleMaps][Points][<?php echo $key; ?>][Latitude]" placeholder="Enter Point Latitude" value="<?php echo $point['Latitude']; ?>" />
+                     		</div>
+                            <div class="col-xs-3">
+                                <a data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger removeButton"><i class="fa fa-minus-circle"></i></a>
+                            </div>
+                        </div>
+                    <?php } ?>
+                     <?php } ?>
                 </div>
-                <button class="btn btn-info GoogleMapsPreviewButton" id="GoogleMapsPreviewButton_<?php echo $lang['code']; ?>"><?php echo $preview; ?></button>
+                <div class="row pointsbuttons">
+                    <div class="col-xs-1">
+                        <a onclick="addFilterRow();" data-toggle="tooltip" title="<?php echo $button_add_module; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a>
+                    </div>
+                    <div class="col-xs-3">
+                        <button class="btn btn-info GoogleMapsPreviewButton" onclick="displayMaps('<?php echo $lang['code']; ?>')" id="GoogleMapsPreviewButton_<?php echo $lang['code']; ?>"><?php echo $preview; ?></button>
+                    </div>
+                </div>
             </div>
     	</td>
     </tr>
@@ -71,3 +90,33 @@
     	</td>
     </tr>
 </table>
+<script type="text/javascript"><!--
+
+$('.removeButton').click( function(){
+    $(this).parent().parent().remove();
+});
+
+function addFilterRow() {
+    var selectedLang = $('ul.columnSettings .active').data('langcode');
+    var filter_row =  $('#GoogleMapsPoints_'+selectedLang+' .row:last').data("id")+1;
+    if(isNaN(filter_row)) filter_row = 0;
+
+
+    html  = '<div style="margin-top:5px;" class="row" data-id="'+filter_row+'">';
+        html  += '<div class="col-xs-3">';   
+            html += '<input type="text" class="GoogleMapsName_'+selectedLang+' semiField form-control" name="<?php echo $moduleName; ?>['+ selectedLang +'][Widgets][GoogleMaps][Points]['+ filter_row +'][Name]"  placeholder="Enter Point Name" value=""/>';
+        html += '</div>';
+        html  += '<div class="col-xs-3">';   
+            html += '<input type="text" class="GoogleMapsLongitude_'+selectedLang+' semiField form-control" name="<?php echo $moduleName; ?>['+ selectedLang +'][Widgets][GoogleMaps][Points]['+ filter_row +'][Longitude]"  placeholder="Enter Point Longitude" value=""/>';
+        html += '</div>';
+        html += '<div class="col-xs-3">';
+            html += '<input type="text" class="GoogleMapsLatitude_'+selectedLang+' semiField form-control" name="<?php echo $moduleName; ?>['+ selectedLang +'][Widgets][GoogleMaps][Points]['+ filter_row +'][Latitude]"  placeholder="Enter Point Latitude" value="" />';
+        html += '</div>';
+        html += '<div class="col-xs-3">';
+            html += '<a onclick="$(this).parent().parent().remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
+        html += '</div>';
+    html += '</div>';
+   
+    $('#GoogleMapsPoints_'+selectedLang).append(html);
+}
+//--></script>

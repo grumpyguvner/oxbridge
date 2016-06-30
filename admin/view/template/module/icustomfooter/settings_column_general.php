@@ -46,6 +46,8 @@
                     <option value="defaultocwithicons" <?php echo (!empty($module_data['Settings']['UseFooterWith']) && $module_data['Settings']['UseFooterWith'] == 'defaultocwithicons') ? 'selected=selected' : ''; ?>><?php echo $footerusewithdefaultocwithicons; ?></option>
                     <option value="themefooter" <?php echo (!empty($module_data['Settings']['UseFooterWith']) && $module_data['Settings']['UseFooterWith'] == 'themefooter') ? 'selected=selected' : ''; ?>><?php echo $footerusewiththemefooter; ?></option>
                     <option value="icons" <?php echo (!empty($module_data['Settings']['UseFooterWith']) && $module_data['Settings']['UseFooterWith'] == 'icons') ? 'selected=selected' : ''; ?>><?php echo $footerusewithicons; ?></option>
+                    <option value="none" <?php echo (!empty($module_data['Settings']['UseFooterWith']) && $module_data['Settings']['UseFooterWith'] == 'none') ? 'selected=selected' : ''; ?>><?php echo $footerusewithnone; ?></option>
+
                 </select>
             </div>
     	</td>

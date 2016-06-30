@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']       					= 'iCustomFooter 3.2.4';
+$_['heading_title']       					= 'iCustomFooter';
 
 // Text
 $_['text_module']        					= 'Modules';
@@ -16,7 +16,8 @@ $_['entry_layout']        					= 'Layout:';
 $_['entry_position']      					= 'Position:';
 $_['entry_status']        					= 'Status:';
 $_['entry_sort_order']    					= 'Sort Order:';
-
+$_['button_add_module'] 					= 'Add';
+$_['button_remove'] 						= 'Remove';
 //Categories
 $_['aboutus']        						= 'About us';
 $_['contactus']        						= 'Contact us';
@@ -26,6 +27,7 @@ $_['twitter']        						= 'Twitter';
 $_['facebook']        						= 'Facebook';
 $_['youtube']        						= 'YouTube';
 $_['customcolumn']     						= 'Custom column';
+$_['duplicatecolumn']     					= 'Duplicate settings';
 $_['socialbuttons']     					= 'Social buttons';
 $_['paymenticons']     						= 'Payment icons';
 $_['footercustomization']					= '';
@@ -61,6 +63,11 @@ $_['preview']								= 'Preview';
 //Labels
 $_['assistancetitle']						= 'Hola, iCustomFooter welcomes you!';
 $_['showcolumn']        					= 'Show column';
+$_['duplicate_column_label']				= 'Duplicate settings from:';
+$_['duplicate_column_help']					= 'Duplicate all the column settings from another language';
+$_['duplicate_settings_label']				= 'Duplicate settings from:';
+$_['duplicate_settings_help']				= 'Duplicate all settings from another store.';
+$_['duplicate_button'] 						= 'Duplicate';
 $_['columnposition']        				= 'Column position';
 $_['titleofthecolumn']      				= 'Title of the column';
 $_['aboutus_text']        					= 'About us text';
@@ -102,7 +109,12 @@ $_['twitter_profile'] 						= 'Twitter profile';
 $_['twitter_keyword_mentioned_in_twitter'] 	= 'Keyword mentioned in Twitter';
 $_['twitter_widget_id']						= 'Widget ID <span class="help">To get the ID, please <a href="http://screencast.com/t/9CqTLlCyZX9" target="_blank">follow this video tutorial</a>.</span>';
 $_['facebook_pageurl']      				= 'Facebook page URL';
-$_['facebook_widgetheight'] 				= 'Facebook widget height <span class="help">In pixels</span>';
+$_['facebook_pagetitle']      				= 'Facebook page title <span class="help">The title of your Facebook page as shown on Facebook</span>';
+$_['facebook_widgetheight'] 				= 'Height <span class="help">The pixel height of the embed (Min. 70)</span>';
+$_['facebook_usesmallheader'] 				= 'Use small header <span class="help">Use a smaller version of the page header</span>';
+$_['facebook_hidecoverphoto'] 				= 'Hide cover photo <span class="help">Hide the cover photo in the header</span>';
+$_['facebook_showfriendsfaces'] 			= 'Show friends faces <span class="help">Show profile photos when friends like this</span>';
+$_['facebook_showpageposts'] 				= 'Show page posts <span class="help">Show posts from the Page\'s timeline</span>';
 $_['youtube_url']        					= 'YouTube video ID <span class="help">YouTube video ID is a unique code at the end of the of URL, e.g. ShkYDPN5Knc</span>';
 $_['youtube_width']        					= 'YouTube video width <span class="help">In pixels</span>';
 $_['youtube_height']        				= 'YouTube video height <span class="help">In pixels</span>';
@@ -120,6 +132,8 @@ $_['footerwrapperwidth']        			= 'Footer Wrapper width <span class="help">In
 $_['footerwidth']        					= 'Footer width <span class="help">In pixels (px) or in percents (%).</span>';
 $_['footerusefooterwith']    				= 'Use iCustomFooter along with';
 $_['footerusewithdefaultocwithicons']		= 'Default iCustomFooter Footer + Social and Payment icons';
+$_['footerusewithnone']						= 'Only Default iCustomFooter Footer';
+
 $_['footerusewiththemefooter']				= 'Installed theme footer';
 $_['footerusewithicons']					= 'Social and Payment icons';
 $_['hidepoweredby']         				= 'Hide \'Powered By\' message';
