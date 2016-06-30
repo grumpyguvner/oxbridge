@@ -1,0 +1,40 @@
+.animate-show {
+    line-height: 20px;
+    opacity: 1;
+    padding: 10px;
+    border: 1px solid black;
+    background: white;
+}
+
+.animate-show.ng-hide-add {
+    transition: all linear 0.05s;
+}
+.animate-show.ng-hide-remove {
+    transition: all linear 0.3s;
+}
+
+.animate-show.ng-hide {
+    line-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+}
+
+
+.animate-show-config {
+    line-height: 20px;
+    opacity: 1;
+    padding: 10px;
+    margin-top: 45px;
+    border: none;
+    background: #eee;
+}
+
+.animate-show-config.ng-hide-add, .animate-show-config.ng-hide-remove {
+    transition: all linear 0.3s;
+}
+
+.animate-show-config.ng-hide {
+    line-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+}
