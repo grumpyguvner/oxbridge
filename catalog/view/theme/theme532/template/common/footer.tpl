@@ -74,7 +74,6 @@
 
         </div>
     </div>
-    <?php } ?>
     <div class="copyright" style="margin-bottom: 15px;">
         <div class="container">
             <div class="row">
@@ -102,7 +101,7 @@
             </div>
         </div>
     </div>
-
+    <?php } ?>
 </footer>
 </div>
 
