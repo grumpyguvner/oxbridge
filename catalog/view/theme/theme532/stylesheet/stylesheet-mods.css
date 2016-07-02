@@ -175,3 +175,10 @@ a.button-prod {
   padding-right: 15px;
   z-index: 91;
 }
+
+/* Added July 2016 by Mark Horton to add Background Image to footer */
+#icustomfooter-custom.flatfooterlayout {
+    background-image: url("/catalog/view/theme/theme532/image/footer_bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
