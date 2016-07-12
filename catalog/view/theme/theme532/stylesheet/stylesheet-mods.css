@@ -182,3 +182,90 @@ a.button-prod {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+/* Added July 2016 by Mark Horton to reformat Nav Bar using Top Header Links module */
+.header ul.nav {
+    background-color: #ff4f02;
+    max-width: 1170px;
+    width: 100%;
+    z-index: 23;
+    position: relative;
+    top: 0;
+}
+.header ul.nav > li {
+    border-radius: 0;
+    border-right: 1px solid #ff844e;
+    float: left;
+    position: relative;
+    z-index: 10;
+}
+.header ul.nav > li > a {
+    color: #fff;
+    display: block;
+    font-size: 17px;
+    line-height: 30px;
+    padding: 15px 20px;
+    position: relative;
+    text-decoration: none;
+    z-index: 1;
+}
+.header ul.nav > li.dropdown > a:before {
+    position: absolute;
+    left: 50%;
+    top: 63%;
+    margin-left: -6px;
+    content: '\f107';
+    font: 400 16px/16px 'FontAwesome';
+}
+.header ul.nav > li > a:hover,
+.header ul.nav > li > a:active {
+    background-color: #717171;
+}
+.navbar-nav > li > .dropdown-menu {
+    background-color: #fff;
+    border: 1px solid #e3e3e3;
+    padding: 0px;
+    left: 0;
+    position: absolute;
+    top: 60px;
+    z-index: 5;
+}
+.navbar-nav > li.dropdown:hover > .dropdown-menu {
+    display: block;
+    margin-top: 0; // remove the gap so it doesn't close
+ }
+.navbar-nav > li > .dropdown-menu .dropdown-inner {
+}
+.navbar-nav > li > .dropdown-menu .dropdown-inner ul {
+    display: table-cell;
+}
+.navbar-nav > li > .dropdown-menu .dropdown-inner ul li {
+    border: 1px solid #e3e3e3;
+    line-height: 36px;
+    width: auto;
+}
+.navbar-nav > li > .dropdown-menu .dropdown-inner ul li {
+    border-top: none;
+    border-right: none;
+}
+.navbar-nav > li > .dropdown-menu .dropdown-inner ul a {
+    color: #777;
+    font-size: 13px;
+    padding: 8px 20px;
+    white-space: nowrap;
+}
+.navbar-nav > li > .dropdown-menu .dropdown-inner ul a:hover,
+.navbar-nav > li > .dropdown-menu .dropdown-inner ul a:active {
+    color: #000;
+    background: rgba(0,0,0,0) none repeat scroll 0 0;
+}
+.navbar-nav > li > .dropdown-menu .dropdown-inner .see-all {
+    text-align: center;
+    display: block;
+    padding: 8px 20px;
+}
+@media (max-width: 767px) {
+  .nav__primary {
+    display: none;
+  }
+}
