@@ -47,6 +47,7 @@
               <tr>
                 <td class="text-left required"><?php echo $entry_group; ?></td>
                 <td class="text-right"><?php echo $entry_link; ?></td>
+                <td class="text-left"><?php echo $entry_store; ?></td>    
                 <td class="text-right"><?php echo $entry_columns; ?></td>
                 <td class="text-right"><?php echo $entry_sort_order; ?></td>
               </tr>
@@ -72,6 +73,45 @@
                   </div>
                   
                   <?php } ?>
+                    
+                    <td>
+                    
+                    <div class="form-group">
+          
+                    <div class="col-sm-10">
+                      <div class="well well-sm" style="height: 150px; overflow: auto; width: 200px;">
+                        <div class="checkbox">
+                          <label>
+                            <?php if (in_array(0, $link_store)) { ?>
+                            <input type="checkbox" name="link_store[]" value="0" checked="checked" />
+                            <?php echo $text_default; ?>
+                            <?php } else { ?>
+                            <input type="checkbox" name="link_store[]" value="0" />
+                            <?php echo $text_default; ?>
+                            <?php } ?>
+                          </label>
+                        </div>
+                        <?php foreach ($stores as $store) { ?>
+                        <div class="checkbox">
+                          <label>
+                            <?php if (in_array($store['store_id'], $link_store)) { ?>
+                            <input type="checkbox" name="link_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                            <?php echo $store['name']; ?>
+                            <?php } else { ?>
+                            <input type="checkbox" name="link_store[]" value="<?php echo $store['store_id']; ?>" />
+                            <?php echo $store['name']; ?>
+                            <?php } ?>
+                          </label>
+                        </div>
+                        <?php } ?>
+                      </div>
+                    </div>
+                  </div>
+                    </td>
+
+                    
+                    
+                    
                     
                     
                     <td class="text-right"><input type="text" name="columns" value="<?php echo $columns; ?>" placeholder="<?php echo $entry_columns; ?>" id="input-columns" class="form-control" /></td>

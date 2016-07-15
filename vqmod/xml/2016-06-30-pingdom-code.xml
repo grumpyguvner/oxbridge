@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Pingdom code</id>
+	<version>1.0.0</version>
+	<vqmver>2.4.0</vqmver>
+	<author>Mark Horton</author>
+	
+	<file name="catalog/view/theme/theme532/template/common/header.tpl" error="skip">
+		<operation error="skip">
+			<search position="before"><![CDATA[</head>]]></search>
+			<add><![CDATA[
+                            <script>
+                            var _prum = [['id', '5773b715abe53d670baa049b'],
+                                         ['mark', 'firstbyte', (new Date()).getTime()]];
+                            (function() {
+                                var s = document.getElementsByTagName('script')[0]
+                                  , p = document.createElement('script');
+                                p.async = 'async';
+                                p.src = '//rum-static.pingdom.net/prum.min.js';
+                                s.parentNode.insertBefore(p, s);
+                            })();
+                            </script>
+			]]></add>
+		</operation>
+	</file>
+	
+</modification>

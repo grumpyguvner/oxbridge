@@ -1,66 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
-	<id>AJAX QUICK CHECKOUT V5.0 BY DREAMVENTION</id>
+	<id>AJAX QUICK CHECKOUT V6 BY DREAMVENTION</id>
 	<version>2.0.0.0</version>
 	<vqmver>2.2.1</vqmver>
 	<author>dreamvention.com</author>
 	<file name="catalog/controller/checkout/checkout.php">
-		<operation>
+		<operation error="skip" info="for 2.0.x and 2.1.x">
 			<search position="replace" offset="4"><![CDATA[if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/checkout.tpl')) {]]></search>
+			<ignoreif><![CDATA[// a_vqmod_d_quickcheckout.xml]]></ignoreif>
 			<add><![CDATA[
-			$this->load->model('setting/setting');
-			$quickcheckout = $this->model_setting_setting->getSetting('d_quickcheckout', $this->config->get('config_store_id'));
-			if(isset($quickcheckout['d_quickcheckout']['general']['main_checkout'])){
-				$template = ($quickcheckout['d_quickcheckout']['general']['main_checkout']) ? 'd_quickcheckout' : 'checkout';
+			// a_vqmod_d_quickcheckout.xml
+			
+			if($this->config->get('d_quickcheckout_status')){
+				$template = 'd_quickcheckout';
 			}else{
 				$template = 'checkout';
 			}
+			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/'.$template.'.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/checkout/'.$template.'.tpl';
+				$template = $this->config->get('config_template') . '/template/checkout/'.$template.'.tpl';
 			} else {
-				$this->template = 'default/template/checkout/'.$template.'.tpl';
+				$template = 'default/template/checkout/'.$template.'.tpl';
 			}
-			$this->response->setOutput($this->load->view($this->template, $data));]]></add>
+			$this->response->setOutput($this->load->view($template, $data));]]></add>
 		</operation>
-		<operation>
-			<search position="before"><![CDATA[$data['header'] = $this->load->controller('common/header');]]></search>
-			<add><![CDATA[$data['d_quickcheckout'] = $this->load->controller('module/d_quickcheckout');]]></add>
+		<operation error="skip" info="For 2.2.x and up">
+			<search position="replace"><![CDATA[$this->response->setOutput($this->load->view('checkout/checkout', $data));]]></search>
+			<ignoreif><![CDATA[// a_vqmod_d_quickcheckout.xml]]></ignoreif>
+			<add><![CDATA[
+			// a_vqmod_d_quickcheckout.xml
+			
+			if($this->config->get('d_quickcheckout_status')){
+				$template = 'd_quickcheckout';
+			}else{
+				$template = 'checkout';
+			}
+			
+			$this->response->setOutput($this->load->view('checkout/'.$template, $data));]]></add>
 		</operation>
-	</file>
-	<!-- opencart 1.5.1x issue-->
-	<file name="catalog/model/setting/setting.php">
 		<operation error="skip">
-			<search position="replace"><![CDATA[$data[$result['key']] = unserialize($setting['value']);]]></search>
-			<add><![CDATA[$data[$result['key']] = unserialize($result['value']);]]></add>
+			<search position="before"><![CDATA[$data['header'] = $this->load->controller('common/header');]]></search>
+			<add><![CDATA[
+		if($this->config->get('d_quickcheckout_status')){
+			$data['d_quickcheckout'] = $this->load->controller('module/d_quickcheckout');
+		}
+		]]></add>
 		</operation>
 	</file>
-	<file name="admin/model/setting/setting.php">
-		<operation  error="skip">
-			<search position="replace"><![CDATA[$data[$result['key']] = unserialize($setting['value']);]]></search>
-			<add><![CDATA[$data[$result['key']] = unserialize($result['value']);]]></add>
-		</operation>
-	</file>	
-
-	<!-- payment methods fix -->
-	<file name="catalog/view/theme/default/template/payment/cheque.tpl">
-		<operation>
-			<search position="replace"><![CDATA[$('#button-confirm').bind('click', function() {]]></search>
-			<add><![CDATA[$('#button-confirm').bind('click', function(event) {
-				event.stopImmediatePropagation()]]></add>
+	<file name="system/library/tax.php,system/library/cart/tax.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[final class Tax {]]></search>
+			<ignoreif><![CDATA[// a_vqmod_d_quickcheckout.xml]]></ignoreif>
+			<add><![CDATA[
+	// a_vqmod_d_quickcheckout.xml
+	public function clearRates(){
+		$this->tax_rates = array();
+	}
+			]]></add>
 		</operation>
 	</file>
-	<file name="catalog/view/theme/default/template/payment/pp_pro_uk.tpl">
-		<operation>
-			<search position="replace"><![CDATA[$('#button-confirm').bind('click', function() {]]></search>
-			<add><![CDATA[$('#button-confirm').bind('click', function(event) {
-				event.stopImmediatePropagation()]]></add>
-		</operation>
-	</file>
-	<file name="catalog/view/theme/default/template/payment/pp_pro.tpl">
-		<operation>
-			<search position="replace"><![CDATA[$('#button-confirm').bind('click', function() {]]></search>
-			<add><![CDATA[$('#button-confirm').bind('click', function(event) {
-				event.stopImmediatePropagation()]]></add>
+	<file name="system/library/tax.php,system/library/tax.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[final class Tax {]]></search>
+			<ignoreif><![CDATA[// a_vqmod_d_quickcheckout.xml]]></ignoreif>
+			<add><![CDATA[
+	// a_vqmod_d_quickcheckout.xml
+	public function clearRates(){
+		$this->tax_rates = array();
+	}
+			]]></add>
 		</operation>
 	</file>
 </modification>

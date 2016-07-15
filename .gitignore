@@ -9,5 +9,9 @@
 /system/cache/*
 /system/logs/*
 /system/modification/*
+/system/upload/*
+
+/system/nitro/temp/*
+/system/nitro/cache/*
 
 .DS_Store

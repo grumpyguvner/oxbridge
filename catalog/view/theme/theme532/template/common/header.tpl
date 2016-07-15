@@ -314,12 +314,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         <div class="container">
             <div class="row">
-                <div class="col-sm-12"><?php if ($categories) { ?>
-                    <div id="tm_menu" class="nav__primary">
-                        <?php if ($categories_html) {  echo $categories_html; } ?>
-                    </div>
-                    <?php } ?></div>
-
+                <div class="col-sm-12">
+                  <div id="tm_menu" class="nav__primary">
+                    <ul class="nav navbar-nav">
+                      <?php foreach ($categories as $category) { ?>
+                      <?php if ($category['children']) { ?>
+                      <li class="dropdown"><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a>
+                        <div class="dropdown-menu">
+                          <div class="dropdown-inner">
+                            <?php foreach (array_chunk($category['children'], ceil(count($category['children']) / $category['column'])) as $children) { ?>
+                            <ul class="list-unstyled">
+                              <?php foreach ($children as $child) { ?>
+                              <li><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+                              <?php } ?>
+                            </ul>
+                            <?php } ?>
+                            <?php if ( $category['href'] != 'javascript:void(0);' && $category['column'] > 1 ) { ?>
+                            <a href="<?php echo $category['href']; ?>" class="see-all"><?php echo $text_all; ?> <?php echo $category['name']; ?></a>
+                            <?php } ?>
+                          </div>
+                        </div>
+                      </li>
+                      <?php } else { ?>
+                      <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+                      <?php } ?>
+                      <?php } ?>
+                    </ul>
+                  </div>
+                </div>
             </div>
         </div>
 

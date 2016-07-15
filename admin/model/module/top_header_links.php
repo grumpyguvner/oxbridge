@@ -20,13 +20,23 @@ class ModelModuleTopHeaderLinks extends Model {
 		$this->event->trigger('pre.admin.add.header', $data);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "header_group` SET sort_order = '" . (int)$data['sort_order'] . "', columns = '" . (int)$data['columns'] . "'");
+        
+        
+        
 
 		$header_group_id = $this->db->getLastId();
+        
+        
 
 		foreach ($data['header_group_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "header_group_description SET header_group_id = '" . (int)$header_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "', link = '" . $this->db->escape($data['header_group'][$language_id]['link']) . "'");
 		}
         
+        if (isset($data['link_store'])) {
+			foreach ($data['link_store'] as $store_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "header_group_to_store SET header_group_id = '" . (int)$header_group_id . "', store_id = '" . (int)$store_id . "'");
+			}
+		}
         
         
 
@@ -62,6 +72,19 @@ class ModelModuleTopHeaderLinks extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "header_group` SET sort_order = '" . (int)$data['sort_order'] . "', columns = '" . (int)$data['columns'] . "' WHERE header_group_id = '" . (int)$header_group_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "header_group_description WHERE header_group_id = '" . (int)$header_group_id . "'");
+        
+        
+        $this->db->query("DELETE FROM " . DB_PREFIX . "header_group_to_store WHERE header_group_id = '" . (int)$header_group_id . "'");
+        
+       
+
+		if (isset($data['link_store'])) {
+			foreach ($data['link_store'] as $store_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "header_group_to_store SET header_group_id = '" . (int)$header_group_id . "', store_id = '" . (int)$store_id . "'");
+			}
+		}
+        
+        
 
 		foreach ($data['header_group_description'] as $language_id => $value) {
 			
@@ -118,6 +141,34 @@ class ModelModuleTopHeaderLinks extends Model {
 
 		return $query->row;
 	}
+    
+    
+
+    
+    
+    public function getHeaderGroupStoresNames($header_group_id) {
+		$store_data = array();
+
+		$query = $this->db->query("SELECT hg2s.*, s.name 
+        FROM " . DB_PREFIX . "header_group_to_store hg2s 
+        LEFT JOIN " . DB_PREFIX . "store s ON s.store_id = hg2s.store_id
+        WHERE hg2s.header_group_id = '" . (int)$header_group_id . "'");
+
+		foreach ($query->rows as $result) {
+            if($result['store_id'] == 0){
+                
+                $result['name'] = 'Default';
+            }
+			$store_data[] = $result['name'];
+		}
+
+		return $store_data;
+	}
+    
+    
+    
+    
+    
 
 	public function getHeaderGroups($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "header_group` fg LEFT JOIN " . DB_PREFIX . "header_group_description fgd ON (fg.header_group_id = fgd.header_group_id) WHERE fgd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
@@ -243,4 +294,18 @@ class ModelModuleTopHeaderLinks extends Model {
 
 		return $query->row['total'];
 	}
+    
+    
+    public function getLinkStores($header_id) {
+		$link_store_data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "header_group_to_store WHERE header_group_id = '" . (int)$header_id . "'");
+
+		foreach ($query->rows as $result) {
+			$link_store_data[] = $result['store_id'];
+		}
+
+		return $link_store_data;
+	}
+    
 }
