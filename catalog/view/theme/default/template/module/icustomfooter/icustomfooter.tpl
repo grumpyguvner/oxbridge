@@ -44,7 +44,6 @@
 		
 		$('.iWidget h2').click(function() {
 			if (inSmallWidthMode == true) {
-				debugger;
 				if ($(this).parent().find('.belowTitleContainer').css('display') == 'none') {
 					$('.iWidget .belowTitleContainer').slideUp();
 					$(this).parent().find('.belowTitleContainer').slideDown();
@@ -55,13 +54,11 @@
 		var respondOnSmallWidth = function(currentWidth) {
 			if (currentWidth < (columnWidth*2+60)) {
 				inSmallWidthMode = true;
-				debugger;
 				$('.iWidgets .belowTitleContainer').slideUp();
 				$('.iWidgets > li').css('width','100%');
 				$('#icustomfooter_default_footer .grid_footer_3').css('width','100%');
 			} else {
 				inSmallWidthMode = false;
-				debugger;
 				$('.iWidgets .belowTitleContainer').slideDown();
 				$('.iWidgets > li').css('width','50%');
 				$('#icustomfooter_default_footer .grid_footer_3').css('width','50%');

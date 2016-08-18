@@ -170,24 +170,44 @@ function submitForm(element, module_id, please_wait, success, redirect) {
 	
 	var errors = validateForm(module_id);
 	if (errors.length) {
-		alert('• ' + errors.join('\n• '));
+                $('#form' + module_id+' .box-content').prepend("<div class='message error'>"+errors.join('\n')+"</div>");
+                setTimeout(function() {
+                    $('#form' + module_id+' .box-content .message').remove();
+                }, 5000);
+//		alert('• ' + errors.join('\n• '));
 		element.removeAttr('disabled').html(buttonText);
 	} else {
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?route=module/form_builder/submit&module_id=' + module_id + '&captcha=' + (typeof grecaptcha === 'undefined' ? '' : grecaptcha.getResponse()),
+                        //changed url: line below as wasn't working when capthca not present
+                        //url: 'index.php?route=module/form_builder/submit&module_id=' + module_id + '&captcha=' + (typeof grecaptcha === 'undefined' ? '' : grecaptcha.getResponse()),
+			url: 'index.php?route=module/form_builder/submit&module_id=' + module_id,
 			data: $('#form' + module_id).find(':input:not(:checkbox), :checkbox:checked').serialize(),
 			success: function(data) {
 				element.removeAttr('disabled').html(buttonText);
 				if (data.trim() == 'success') {
 					if (success) {
-						alert(success);
+                                            $('#form' + module_id+' .box-content').prepend("<div class='message success'>"+success+"</div>");
+                                            setTimeout(function() {
+                                                $('#form' + module_id+' .box-content .message').remove();
+                                            }, 5000);
+//                                            alert(success);
 					}
+                                        $('.tab-slide-out').tabSlideOut('close');
+                                        var gaCategory = $('#form' + module_id).find('[name="gaCategory"]');
+                                        var gaEvent = $('#form' + module_id).find('[name="gaEvent"]');
+                                        if( gaCategory.length && gaEvent.length ){
+                                            ga('send', 'event', { eventCategory: gaCategory.val(), eventAction: gaEvent.val()});
+                                        }
 					if (redirect) {
 						location = redirect;
 					}
 				} else {
-					alert(data);
+                                        $('#form' + module_id+' .box-content').prepend("<div class='message error'>"+data+"</div>");
+                                        setTimeout(function() {
+                                            $('#form' + module_id+' .box-content .message').remove();
+                                        }, 5000);
+//					alert(data);
 				}
 			}
 		});

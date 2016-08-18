@@ -283,3 +283,80 @@ a.button-prod {
 #login_view #login_button_popup:focus {
     background-color: #c2c2c2;
 }
+
+/* Added August 2016 by Mark Horton to format Prospectus Slide Out Tab */
+      .tab-slide-out {
+        padding: 0px;
+        width: 290px;
+        height: 380px;
+        background: transparent url("/image/catalog/tabslideout-bg.png") no-repeat right top;
+        -webkit-box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);
+        -moz-box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);
+        box-shadow: 0 0 10px 2px rgba(0,0,0,0.1);
+        z-index: 10000;
+      }
+      .tab-slide-out .handle:hover {
+          cursor: pointer;
+      }
+      #tab-slide-out-close,
+      #tab-slide-out-hide {
+	margin: 10px;
+	text-shadow: unset;
+	font-weight: normal;
+	font-size: 12px;
+        color: #fff;
+        display: none;
+      }
+      .tab-slide-out.open #tab-slide-out-close {
+        display: block;
+      }
+      .tab-slide-out .close:after {
+        content: " X";
+      }
+      .tab-slide-out .form-builder {
+        margin-top: 0px;
+        margin-right: 34px;
+      }
+      .tab-slide-out .form-builder p {
+        margin-right: 34px;
+        font-size: 16px;
+        color: #fff;
+      }
+      .tab-slide-out .box-heading {
+          padding: 0px 0px 0px 30px;
+      }
+      .tab-slide-out .form-builder .box-content {
+          padding: 15px 0px 15px 30px;
+      }
+      .tab-slide-out .box-heading {
+          margin-bottom: 10px;
+          background-color: transparent;
+      }
+      .tab-slide-out .form-builder .box-content .message {
+	background-color: #fff;
+	width: 90%;
+	font-size: 16px;
+	padding: 6px 0px;
+      }
+      .tab-slide-out .form-builder .box-content .message.error {
+	color: #f00;
+      }
+      .tab-slide-out .box-heading h3 {
+        font: 700 20px/22px "Roboto Condensed",sans-serif;
+        text-transform: uppercase;
+        color: #fff;
+        white-space: nowrap;
+      }
+      .tab-slide-out .form-builder .form-field h4 {
+        display: none;
+      }
+      .tab-slide-out .form-builder .form-field .form-control {
+        opacity: 0.8;
+      }
+      .tab-slide-out .form-builder .btn {
+	float: right;
+	margin-right: 34px;
+	background-color: rgb(68, 68, 68);
+	opacity: 0.8;
+	text-transform: uppercase;
+      }
