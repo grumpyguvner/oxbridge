@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>Prospectus Slide Out Tab</id>
+	<version>1.0.0</version>
+	<vqmver>2.4.0</vqmver>
+	<author>Mark Horton</author>
+        
+	<file name="catalog/view/theme/theme532/template/product/product.tpl" error="skip">
+		<operation error="skip">
+			<search position="after"><![CDATA[<a href="<?php echo $link_contact ?>" class="button-adviser">Contact an Adviser</a>]]></search>
+			<add><![CDATA[
+<a id="button-prospectus" href="#" class="button-adviser" style="margin-left: 10px">Get a prospectus</a>        
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/theme532/template/common/footer.tpl" error="skip">
+		<operation error="skip">
+			<search position="before"><![CDATA[</body>]]></search>
+			<add><![CDATA[
+<div class="tab-slide-out">
+    <div class="handle">
+        <a id="tab-slide-out-close" class="close" href="#">Close</a>
+        <a id="tab-slide-out-hide" class="close" href="#">Hide</a>
+    </div>
+</div>
+<script src="<?php echo $global_path ?>js/cookie.js" type="text/javascript"></script>
+<script src="<?php echo $global_path ?>js/jquery.tabSlideOut.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        if ( $("input[name='tabSlideOut']").length ) {
+ 
+            $("input[name='tabSlideOut']").closest(".form-builder").find(".box-heading").appendTo(".handle");
+            $("input[name='tabSlideOut']").closest(".form-builder").appendTo(".tab-slide-out");
+            $('.tab-slide-out').tabSlideOut({
+                toggleButton: '#tab-slide-out-close',
+                tabLocation: 'bottom',
+                fixedPosition: true,
+                pathToTabImage: 'image/catalog/tabslideout-handle.png',
+                imageHeight: 40,
+                imageWidth: 290,
+                clickScreenToClose: false
+            });
+            
+            $('#tab-slide-out-hide').hide();
+ 
+        } else {
+            
+            $('.tab-slide-out').hide();
+            
+        }
+
+        $('#button-prospectus').on('click', function(event){
+            event.preventDefault();
+            Cookies.remove('hideTabSlideOut');
+            $('.tab-slide-out:hidden').show();
+            if ( !$('.tab-slide-out').tabSlideOut('isOpen') ) {
+                $('.tab-slide-out').tabSlideOut('open')
+            }
+        });
+
+        $('#tab-slide-out-close').on('click', function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            if ( $('.tab-slide-out').tabSlideOut('isOpen') ) {
+                $('.tab-slide-out').tabSlideOut('close')
+            }
+        });
+
+        $('#tab-slide-out-hide').on('click', function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            Cookies.set('hideTabSlideOut',true);
+            $('.tab-slide-out').hide();
+        });
+        
+        var hideTab = Cookies.get('hideTabSlideOut');
+        if (typeof hideTab != 'undefined') {
+            $('.tab-slide-out').hide();
+        }
+        
+    });
+</script>
+			]]></add>
+		</operation>
+	</file>
+	
+</modification>
